@@ -5,7 +5,7 @@ import Entity.User;
 import Interfaces.Specification.UserSpecification;
 
 
-public interface UserRepository {
+public interface IUserRepository {
     void addUser(User user);
     void removeUser(User user);
     void updateUser(User user);

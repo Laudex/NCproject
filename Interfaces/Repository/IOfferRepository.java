@@ -6,7 +6,7 @@ import Interfaces.Specification.OfferSpecification;
 import java.util.List;
 
 
-public interface OfferRepository {
+public interface IOfferRepository {
     void addOffer(Offer offer);
     void removeOffer(Offer offer);
     void updateOffer(Offer offer);

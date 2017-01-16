@@ -19,5 +19,15 @@ public class User {
         isAdmin = admin;
     }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public boolean getisAdmin() {
+        return isAdmin;
+    }
 }

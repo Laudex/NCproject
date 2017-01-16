@@ -17,6 +17,19 @@ public class AttrValues {
     public void setValue(String value) {
         this.value = value;
     }
+
+    public int getOfferId() {
+        return offerId;
+    }
+
+    public int getAttrId() {
+        return attrId;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
     public boolean hasAttrId(int desiredAttrId){
         return this.attrId == desiredAttrId;
     }

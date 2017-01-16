@@ -14,6 +14,19 @@ public class Attr {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setAttrId(int attrId) {
+        this.attrId = attrId;
+    }
+
+    public int getAttrId() {
+        return attrId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public boolean hasAttrName(String desiredAttrName){
         return this.name.equals(desiredAttrName);
     }

@@ -6,7 +6,7 @@ import Interfaces.Specification.OrderSpecification;
 import java.util.List;
 
 
-public interface OrderRepository {
+public interface IOrderRepository {
     void addOrders(Orders order);
     void removeOrders(Orders orders);
     void updateOrders(Orders orders);

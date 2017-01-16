@@ -3,16 +3,28 @@ package Entity;
 
 public class Offer {
     static private int k = 1;
-    private int offer_id;
+    private int offerId;
     private String name;
 
     public Offer() {
-        this.offer_id = k;
+        this.offerId = k;
         k++;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setOffer_id(int offerId) {
+        this.offerId = offerId;
+    }
+
+    public int getOfferId() {
+        return offerId;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean hasOfferName(String desiredOfferName){

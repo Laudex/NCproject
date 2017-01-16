@@ -25,6 +25,26 @@ public class Orders {
         this.startDate = startDate;
     }
 
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public int getOfferId() {
+        return offerId;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
     public boolean hasUserId(int desiredUserId){
         return this.userId == desiredUserId;
     }

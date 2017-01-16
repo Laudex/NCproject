@@ -6,7 +6,7 @@ import Interfaces.Specification.AttrSpecification;
 import java.util.List;
 
 
-public interface AttrRepository {
+public interface IAttrRepository {
     void addAttr(Attr attr);
     void removeAttr(Attr attr);
     void updateAttr(Attr attr);
