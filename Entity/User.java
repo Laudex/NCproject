@@ -11,8 +11,8 @@ public class User {
         k++;
     }
 
-    public boolean userIsAdmin(){
-        return this.isAdmin == true;
+    public boolean userIsAdmin(boolean admin){
+        return this.isAdmin == admin;
     }
 
     public void setAdmin(boolean admin) {

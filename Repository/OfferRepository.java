@@ -1,5 +1,6 @@
 package Repository;
 
+import DBclasses.DBChanger;
 import DBclasses.DBConnection;
 import Entity.Offer;
 import Interfaces.Repository.IOfferRepository;
@@ -13,17 +14,23 @@ public class OfferRepository implements IOfferRepository {
     private List<Offer> offers = new ArrayList<>();
     @Override
     public void addOffer(Offer offer) {
-        offers.add(offer);
+        String sqlQuery = String.format("INSERT INTO offer (offer_id, name) VALUES (%s,\'%s\');", offer.getOfferId(),offer.getName());
+        System.out.println(sqlQuery);
+        DBChanger.changeEntity(sqlQuery);
     }
 
     @Override
     public void removeOffer(Offer offer) {
-
+        String sqlQuery = String.format("DELETE FROM offer WHERE offer_id = %s;",offer.getOfferId());
+        System.out.println(sqlQuery);
+        DBChanger.changeEntity(sqlQuery);
     }
 
     @Override
     public void updateOffer(Offer offer) {
-
+        String sqlQuery = String.format("UPDATE offer SET name = \'%s\' WHERE offer_id = %s;",offer.getName(),offer.getOfferId());
+        System.out.println(sqlQuery);
+        DBChanger.changeEntity(sqlQuery);
     }
 
     @Override
