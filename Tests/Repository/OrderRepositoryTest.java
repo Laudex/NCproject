@@ -1,0 +1,118 @@
+package Repository;
+
+import Entity.Offer;
+import Entity.Orders;
+import org.junit.Test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import static org.junit.Assert.*;
+
+/**
+ * Created by ааааааааааеееееееее on 18.01.2017.
+ */
+public class OrderRepositoryTest {
+    @Test
+    public void addOrders() throws Exception {
+        Orders order = new Orders(11,1,2,"2013-12-12");
+        OrderRepository rep = new OrderRepository();
+        rep.addOrders(order);
+        Orders testOrder = new Orders();
+        String sqlQuery = String.format("SELECT * FROM orders WHERE order_id = %s",order.getOrderId());
+        Connection connection = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/NCproject", "postgres", "1");
+            connection.setAutoCommit(false);
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sqlQuery);
+            if(rs.next()){
+                testOrder.setOrderId(rs.getInt("order_id"));
+                testOrder.setUserId(rs.getInt("user_id"));
+                testOrder.setOfferId(rs.getInt("offer_id"));
+                testOrder.setStartDate(rs.getString("start_date"));
+            }
+            rs.close();
+            stmt.close();
+            connection.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        assertEquals(order.getOrderId(),testOrder.getOrderId());
+        assertEquals(order.getUserId(),testOrder.getUserId());
+        assertEquals(order.getOfferId(),testOrder.getOfferId());
+        assertEquals(order.getStartDate(),testOrder.getStartDate());
+    }
+
+    @Test
+    public void removeOrders() throws Exception {
+        Orders order = new Orders(11,1,2,"2013-12-12");
+        OrderRepository rep = new OrderRepository();
+        rep.removeOrders(order);
+        Orders testOrder = null;
+        String sqlQuery = String.format("SELECT * FROM orders WHERE order_id = %s",order.getOrderId());
+        Connection connection = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/NCproject", "postgres", "1");
+            connection.setAutoCommit(false);
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sqlQuery);
+            if(rs.next()){
+                testOrder = new Orders();
+                testOrder.setOrderId(rs.getInt("order_id"));
+                testOrder.setUserId(rs.getInt("user_id"));
+                testOrder.setOfferId(rs.getInt("offer_id"));
+                testOrder.setStartDate(rs.getString("start_date"));
+            }
+            rs.close();
+            stmt.close();
+            connection.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        assertNull(testOrder);
+    }
+
+    @Test
+    public void updateOrders() throws Exception {
+        Orders order = new Orders(11,2,3,"2020-12-12");
+        OrderRepository rep = new OrderRepository();
+        rep.updateOrders(order);
+        Orders testOrder = new Orders();
+        String sqlQuery = String.format("SELECT * FROM orders WHERE order_id = %s",order.getOrderId());
+        Connection connection = null;
+        Statement stmt = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/NCproject", "postgres", "1");
+            connection.setAutoCommit(false);
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sqlQuery);
+            if(rs.next()){
+                testOrder.setOrderId(rs.getInt("order_id"));
+                testOrder.setUserId(rs.getInt("user_id"));
+                testOrder.setOfferId(rs.getInt("offer_id"));
+                testOrder.setStartDate(rs.getString("start_date"));
+            }
+            rs.close();
+            stmt.close();
+            connection.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        assertEquals(order.getOrderId(),testOrder.getOrderId());
+        assertEquals(order.getUserId(),testOrder.getUserId());
+        assertEquals(order.getOfferId(),testOrder.getOfferId());
+        assertEquals(order.getStartDate(),testOrder.getStartDate());
+    }
+
+}

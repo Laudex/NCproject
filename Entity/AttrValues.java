@@ -6,6 +6,15 @@ public class AttrValues {
     private int attrId;
     private String value;
 
+    public AttrValues() {
+    }
+
+    public AttrValues(int offerId, int attrId, String value) {
+        this.offerId = offerId;
+        this.attrId = attrId;
+        this.value = value;
+    }
+
     public void setOfferId(int offerId) {
         this.offerId = offerId;
     }

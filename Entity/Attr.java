@@ -7,8 +7,12 @@ public class Attr {
     private String name;
 
     public Attr() {
-        this.attrId = k;
-        k++;
+
+    }
+
+    public Attr(int attrId, String name) {
+        this.attrId = attrId;
+        this.name = name;
     }
 
     public void setName(String name) {

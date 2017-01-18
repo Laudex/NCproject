@@ -7,8 +7,12 @@ public class Offer {
     private String name;
 
     public Offer() {
-        this.offerId = k;
-        k++;
+
+    }
+
+    public Offer(int offerId, String name) {
+        this.offerId = offerId;
+        this.name = name;
     }
 
     public void setName(String name) {

@@ -2,13 +2,15 @@ package Entity;
 
 
 public class User {
-    static private int k = 1;
     private int userId;
     private boolean isAdmin;
 
     public User(){
-        this.userId = k;
-        k++;
+    }
+
+    public User(int userId, boolean isAdmin) {
+        this.userId = userId;
+        this.isAdmin = isAdmin;
     }
 
     public boolean userIsAdmin(boolean admin){

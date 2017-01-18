@@ -9,8 +9,14 @@ public class Orders {
     private String startDate;
 
     public Orders(){
-        this.orderId = k;
-        k++;
+
+    }
+
+    public Orders(int orderId, int userId, int offerId, String startDate) {
+        this.orderId = orderId;
+        this.userId = userId;
+        this.offerId = offerId;
+        this.startDate = startDate;
     }
 
     public void setUserId(int userId) {
