@@ -1,5 +1,6 @@
 package Repository;
 
+import DBclasses.DBConnectionFactory;
 import Entity.Offer;
 import Entity.Orders;
 import org.junit.Test;
@@ -25,9 +26,7 @@ public class OrderRepositoryTest {
         Connection connection = null;
         Statement stmt = null;
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/NCproject", "postgres", "1");
-            connection.setAutoCommit(false);
+            connection = DBConnectionFactory.conFactory();
             stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sqlQuery);
             if(rs.next()){
@@ -41,7 +40,7 @@ public class OrderRepositoryTest {
             connection.close();
         }
         catch (Exception e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         assertEquals(order.getOrderId(),testOrder.getOrderId());
         assertEquals(order.getUserId(),testOrder.getUserId());
@@ -59,9 +58,7 @@ public class OrderRepositoryTest {
         Connection connection = null;
         Statement stmt = null;
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/NCproject", "postgres", "1");
-            connection.setAutoCommit(false);
+            connection = DBConnectionFactory.conFactory();
             stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sqlQuery);
             if(rs.next()){
@@ -76,7 +73,7 @@ public class OrderRepositoryTest {
             connection.close();
         }
         catch (Exception e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         assertNull(testOrder);
     }
@@ -91,9 +88,7 @@ public class OrderRepositoryTest {
         Connection connection = null;
         Statement stmt = null;
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/NCproject", "postgres", "1");
-            connection.setAutoCommit(false);
+            connection = DBConnectionFactory.conFactory();
             stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sqlQuery);
             if(rs.next()){
@@ -107,7 +102,7 @@ public class OrderRepositoryTest {
             connection.close();
         }
         catch (Exception e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         assertEquals(order.getOrderId(),testOrder.getOrderId());
         assertEquals(order.getUserId(),testOrder.getUserId());

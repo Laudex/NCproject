@@ -1,5 +1,6 @@
 package Repository;
 
+import DBclasses.DBConnectionFactory;
 import Entity.*;
 import org.junit.Test;
 
@@ -22,9 +23,7 @@ public class UserRepositoryTest {
         Connection connection = null;
         Statement stmt = null;
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/NCproject", "postgres", "1");
-            connection.setAutoCommit(false);
+            connection = DBConnectionFactory.conFactory();
             stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sqlQuery);
             if(rs.next()){
@@ -36,7 +35,7 @@ public class UserRepositoryTest {
             connection.close();
         }
         catch (Exception e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         assertEquals(user.getUserId(),testUser.getUserId());
         assertEquals(user.getisAdmin(),testUser.getisAdmin());
@@ -52,9 +51,7 @@ public class UserRepositoryTest {
         Connection connection = null;
         Statement stmt = null;
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/NCproject", "postgres", "1");
-            connection.setAutoCommit(false);
+            connection = DBConnectionFactory.conFactory();
             stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sqlQuery);
             if(rs.next()){
@@ -67,7 +64,7 @@ public class UserRepositoryTest {
             connection.close();
         }
         catch (Exception e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         assertNull(testUser);
     }
@@ -82,9 +79,7 @@ public class UserRepositoryTest {
         Connection connection = null;
         Statement stmt = null;
         try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/NCproject", "postgres", "1");
-            connection.setAutoCommit(false);
+            connection = DBConnectionFactory.conFactory();
             stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sqlQuery);
             if(rs.next()){
@@ -96,7 +91,7 @@ public class UserRepositoryTest {
             connection.close();
         }
         catch (Exception e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         assertEquals(user.getUserId(),testUser.getUserId());
         assertEquals(user.getisAdmin(),testUser.getisAdmin());
