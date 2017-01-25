@@ -4,7 +4,7 @@ import DBclasses.DBChanger;
 import DBclasses.DBConnection;
 import Entity.Orders;
 import Interfaces.Repository.IOrderRepository;
-import Interfaces.Specification.OrderSpecification;
+import Interfaces.Specification.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +30,9 @@ public class OrderRepository implements IOrderRepository {
         DBChanger.changeEntity(sqlQuery);
     }
 
-    public List query(OrderSpecification specification) {
+    public List query(Specification specification) {
         List<Orders> specificOrders = new ArrayList<Orders>();
-        String sql = "SELECT * FROM orders WHERE " + specification.toSqlClauses();
+        String sql = "SELECT * FROM orders " + specification.toSqlClauses();
         DBConnection.selectOrders(sql,specificOrders);
         return specificOrders;
     }

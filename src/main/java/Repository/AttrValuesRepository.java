@@ -4,7 +4,7 @@ import DBclasses.DBChanger;
 import DBclasses.DBConnection;
 import Entity.AttrValues;
 import Interfaces.Repository.IAttrValuesRepository;
-import Interfaces.Specification.AttrValuesSpecification;
+import Interfaces.Specification.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +30,9 @@ public class AttrValuesRepository implements IAttrValuesRepository {
         DBChanger.changeEntity(sqlQuery);
     }
 
-    public List query(AttrValuesSpecification specification) {
+    public List query(Specification specification) {
         List<AttrValues> specificAttrsValues = new ArrayList<AttrValues>();
-        String sql = "SELECT * FROM attr_values WHERE " + specification.toSqlClauses();
+        String sql = "SELECT * FROM attr_values " + specification.toSqlClauses();
         DBConnection.selectAttrsValues(sql,specificAttrsValues);
         return specificAttrsValues;
     }

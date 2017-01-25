@@ -1,9 +1,9 @@
 package Specifications;
 
-import Interfaces.Specification.AttrSpecification;
 
+import Interfaces.Specification.Specification;
 
-public class AttrSpecificationByName implements AttrSpecification {
+public class AttrSpecificationByName implements Specification {
     private String name;
 
     public AttrSpecificationByName(String name) {
@@ -12,6 +12,6 @@ public class AttrSpecificationByName implements AttrSpecification {
 
 
     public String toSqlClauses() {
-        return String.format("name like \'%s\'",name);
+        return String.format("WHERE name like \'%s\'",name);
     }
 }

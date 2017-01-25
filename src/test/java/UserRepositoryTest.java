@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class UserRepositoryTest {
     @Test
     public void addUser() throws Exception {
-        User user = new User(200,false);
+        User user = new User(200,"Test name",false);
         UserRepository rep = new UserRepository();
         rep.addUser(user);
         User testUser = new User();
@@ -26,6 +26,7 @@ public class UserRepositoryTest {
             ResultSet rs = stmt.executeQuery(sqlQuery);
             if(rs.next()){
                 testUser.setUserId(rs.getInt("user_id"));
+                testUser.setName(rs.getString("name"));
                 testUser.setAdmin(rs.getBoolean("is_admin"));
             }
             rs.close();
@@ -36,12 +37,13 @@ public class UserRepositoryTest {
             throw new RuntimeException(e);
         }
         assertEquals(user.getUserId(),testUser.getUserId());
+        assertEquals(user.getName(),testUser.getName());
         assertEquals(user.getIsAdmin(),testUser.getIsAdmin());
     }
 
     @Test
     public void removeUser() throws Exception {
-        User user = new User(200,false);
+        User user = new User(200,"Test name",false);
         UserRepository rep = new UserRepository();
         rep.removeUser(user);
         User testUser = null;
@@ -55,6 +57,7 @@ public class UserRepositoryTest {
             if(rs.next()){
                 testUser = new User();
                 testUser.setUserId(rs.getInt("user_id"));
+                testUser.setName(rs.getString("name"));
                 testUser.setAdmin(rs.getBoolean("is_admin"));
             }
             rs.close();
@@ -69,7 +72,7 @@ public class UserRepositoryTest {
 
     @Test
     public void updateUser() throws Exception {
-        User user = new User(10,true);
+        User user = new User(10,"Test name1",true);
         UserRepository rep = new UserRepository();
         rep.updateUser(user);
         User testUser = new User();
@@ -82,6 +85,7 @@ public class UserRepositoryTest {
             ResultSet rs = stmt.executeQuery(sqlQuery);
             if(rs.next()){
                 testUser.setUserId(rs.getInt("user_id"));
+                testUser.setName(rs.getString("name"));
                 testUser.setAdmin(rs.getBoolean("is_admin"));
             }
             rs.close();
@@ -92,6 +96,7 @@ public class UserRepositoryTest {
             throw new RuntimeException(e);
         }
         assertEquals(user.getUserId(),testUser.getUserId());
+        assertEquals(user.getName(),testUser.getName());
         assertEquals(user.getIsAdmin(),testUser.getIsAdmin());
     }
 

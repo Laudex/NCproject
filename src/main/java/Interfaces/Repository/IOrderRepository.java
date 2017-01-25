@@ -1,7 +1,7 @@
 package Interfaces.Repository;
 
 import Entity.Orders;
-import Interfaces.Specification.OrderSpecification;
+import Interfaces.Specification.Specification;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ public interface IOrderRepository {
     void removeOrders(Orders orders);
     void updateOrders(Orders orders);
 
-    List query(OrderSpecification specification);
+    List query(Specification specification);
 }

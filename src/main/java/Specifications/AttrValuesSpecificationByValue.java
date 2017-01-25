@@ -1,9 +1,9 @@
 package Specifications;
 
-import Interfaces.Specification.AttrValuesSpecification;
 
+import Interfaces.Specification.Specification;
 
-public class AttrValuesSpecificationByValue implements AttrValuesSpecification {
+public class AttrValuesSpecificationByValue implements Specification {
     private String attrValue;
 
     public AttrValuesSpecificationByValue(String attrValue) {
@@ -12,6 +12,6 @@ public class AttrValuesSpecificationByValue implements AttrValuesSpecification {
 
 
     public String toSqlClauses() {
-        return String.format("value like \'%s\'",attrValue);
+        return String.format("WHERE value like \'%s\'",attrValue);
     }
 }

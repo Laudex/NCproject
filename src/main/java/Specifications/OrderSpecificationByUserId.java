@@ -1,17 +1,17 @@
 package Specifications;
 
-import Interfaces.Specification.OrderSpecification;
 
+import Interfaces.Specification.Specification;
 
-public class OrderSpecificationByUserId implements OrderSpecification {
-    private String userId;
+public class OrderSpecificationByUserId implements Specification {
+    private int userId;
 
-    public OrderSpecificationByUserId(String userId) {
+    public OrderSpecificationByUserId(int userId) {
         this.userId = userId;
     }
 
 
     public String toSqlClauses() {
-        return String.format("user_id = %s",userId);
+        return String.format("WHERE user_id = %s",userId);
     }
 }

@@ -1,7 +1,7 @@
 package Interfaces.Repository;
 
 import Entity.Attr;
-import Interfaces.Specification.AttrSpecification;
+import Interfaces.Specification.Specification;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ public interface IAttrRepository {
     void removeAttr(Attr attr);
     void updateAttr(Attr attr);
 
-    List query(AttrSpecification specification);
+    List query(Specification specification);
 }

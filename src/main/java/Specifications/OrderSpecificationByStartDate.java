@@ -1,9 +1,9 @@
 package Specifications;
 
-import Interfaces.Specification.OrderSpecification;
 
+import Interfaces.Specification.Specification;
 
-public class OrderSpecificationByStartDate implements OrderSpecification{
+public class OrderSpecificationByStartDate implements Specification {
     private String startDate;
 
     public OrderSpecificationByStartDate(String startDate) {
@@ -12,6 +12,6 @@ public class OrderSpecificationByStartDate implements OrderSpecification{
 
 
     public String toSqlClauses() {
-        return String.format("start_date = \'%s\'",startDate);
+        return String.format("WHERE start_date = \'%s\'",startDate);
     }
 }

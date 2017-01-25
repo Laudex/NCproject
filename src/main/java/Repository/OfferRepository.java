@@ -4,7 +4,7 @@ import DBclasses.DBChanger;
 import DBclasses.DBConnection;
 import Entity.Offer;
 import Interfaces.Repository.IOfferRepository;
-import Interfaces.Specification.OfferSpecification;
+import Interfaces.Specification.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +25,9 @@ public class OfferRepository implements IOfferRepository {
         String sqlQuery = String.format("UPDATE offer SET name = \'%s\' WHERE offer_id = %s;",offer.getName(),offer.getOfferId());
         DBChanger.changeEntity(sqlQuery);
     }
-    public List query(OfferSpecification specification) {
+    public List query(Specification specification) {
         List<Offer> specificOffers = new ArrayList<Offer>();
-        String sql = "SELECT * FROM offer WHERE " + specification.toSqlClauses();
+        String sql = "SELECT * FROM offer " + specification.toSqlClauses();
         DBConnection.selectOffers(sql,specificOffers);
         return specificOffers;
     }

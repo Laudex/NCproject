@@ -1,6 +1,6 @@
 package Interfaces.Specification;
 
 
-public interface AttrSpecification {
+public interface Specification {
     String toSqlClauses();
 }

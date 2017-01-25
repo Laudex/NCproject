@@ -16,6 +16,7 @@ public class DBConnection {
             while(rs.next()){
                 User nextUser = new User();
                 nextUser.setUserId(rs.getInt("user_id"));
+                nextUser.setName(rs.getString("name"));
                 nextUser.setAdmin(rs.getBoolean("is_admin"));
                 specificUsers.add(nextUser);
             }

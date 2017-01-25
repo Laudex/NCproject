@@ -1,9 +1,9 @@
 package Specifications;
 
-import Interfaces.Specification.OrderSpecification;
 
+import Interfaces.Specification.Specification;
 
-public class OrderSpecificationByOfferId implements OrderSpecification {
+public class OrderSpecificationByOfferId implements Specification {
     private int offerId;
 
     public OrderSpecificationByOfferId(int offerId) {
@@ -12,6 +12,6 @@ public class OrderSpecificationByOfferId implements OrderSpecification {
 
 
     public String toSqlClauses() {
-        return String.format("offer_id = %s",offerId);
+        return String.format("WHERE offer_id = %s",offerId);
     }
 }

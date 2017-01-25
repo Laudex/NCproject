@@ -1,9 +1,9 @@
 package Specifications;
 
-import Interfaces.Specification.OfferSpecification;
 
+import Interfaces.Specification.Specification;
 
-public class OfferSpecificationByName implements OfferSpecification {
+public class OfferSpecificationByName implements Specification {
 
     private String name;
 
@@ -14,6 +14,6 @@ public class OfferSpecificationByName implements OfferSpecification {
 
 
     public String toSqlClauses() {
-        return String.format("name like \'%s\'", name);
+        return String.format("WHERE name like \'%s\'", name);
     }
 }

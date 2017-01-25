@@ -1,9 +1,9 @@
 package Specifications;
 
-import Interfaces.Specification.UserSpecification;
 
+import Interfaces.Specification.Specification;
 
-public class UserSpecificationByAdmin implements UserSpecification {
+public class UserSpecificationByAdmin implements Specification {
     private boolean isAdmin;
 
     public UserSpecificationByAdmin(boolean isAdmin) {
@@ -12,6 +12,6 @@ public class UserSpecificationByAdmin implements UserSpecification {
 
 
     public String toSqlClauses() {
-        return String.format("is_admin = %b",isAdmin);
+        return String.format("WHERE is_admin = %b",isAdmin);
     }
 }

@@ -1,7 +1,7 @@
 package Interfaces.Repository;
 
 import Entity.Offer;
-import Interfaces.Specification.OfferSpecification;
+import Interfaces.Specification.Specification;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ public interface IOfferRepository {
     void removeOffer(Offer offer);
     void updateOffer(Offer offer);
 
-    List query(OfferSpecification specification);
+    List query(Specification specification);
 }
