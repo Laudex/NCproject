@@ -1,13 +1,13 @@
-﻿INSERT INTO users VALUES(1,true);
-INSERT INTO users VALUES(2,false);
-INSERT INTO users VALUES(3,false);
-INSERT INTO users VALUES(4,false);
-INSERT INTO users VALUES(5,false);
-INSERT INTO users VALUES(6,false);
-INSERT INTO users VALUES(7,false);
-INSERT INTO users VALUES(8,false);
-INSERT INTO users VALUES(9,false);
-INSERT INTO users VALUES(10,false);
+﻿INSERT INTO users VALUES(1,'Name1',true);
+INSERT INTO users VALUES(2,'Name2',false);
+INSERT INTO users VALUES(3,'Name3',false);
+INSERT INTO users VALUES(4,'Name4',false);
+INSERT INTO users VALUES(5,'Name5',false);
+INSERT INTO users VALUES(6,'Name6',false);
+INSERT INTO users VALUES(7,'Name7',false);
+INSERT INTO users VALUES(8,'Name8',false);
+INSERT INTO users VALUES(9,'Name9',false);
+INSERT INTO users VALUES(10,'Name10',false);
 
 INSERT INTO offer VALUES(1,'Offer 1');
 INSERT INTO offer VALUES(2,'Offer 2');
