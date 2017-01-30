@@ -1,7 +1,7 @@
-import DBclasses.DBConnectionFactory;
-import Entity.Orders;
+import ru.dbclasses.DBConnectionFactory;
+import ru.entity.Orders;
 import org.junit.Test;
-import Repository.OrderRepository;
+import ru.repository.OrderRepository;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class OrderRepositoryTest {
     @Test
     public void addOrders() throws Exception {
-        Orders order = new Orders(11,1,2,"2013-12-12");
+        Orders order = new Orders(100,1,2,"2013-12-12");
         OrderRepository rep = new OrderRepository();
         rep.addOrders(order);
         Orders testOrder = new Orders();

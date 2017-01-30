@@ -5,16 +5,25 @@
          version="3.1">
     <servlet>
         <servlet-name>userViewServlet</servlet-name>
-        <servlet-class>Servlets.UserViewServlet</servlet-class>
+        <servlet-class>ru.servlets.UserViewServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>offerViewServlet</servlet-name>
-        <servlet-class>Servlets.OfferViewServlet</servlet-class>
+        <servlet-class>ru.servlets.OfferViewServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>offerBuyServlet</servlet-name>
+        <servlet-class>ru.servlets.OfferBuyServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>userViewServlet</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>offerBuyServlet</servlet-name>
+        <url-pattern>/offerBuy</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>offerViewServlet</servlet-name>

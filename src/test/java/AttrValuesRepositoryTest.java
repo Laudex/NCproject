@@ -1,7 +1,7 @@
-import DBclasses.DBConnectionFactory;
-import Entity.AttrValues;
+import ru.dbclasses.DBConnectionFactory;
+import ru.entity.AttrValues;
 import org.junit.Test;
-import Repository.AttrValuesRepository;
+import ru.repository.AttrValuesRepository;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

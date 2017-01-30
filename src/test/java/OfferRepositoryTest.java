@@ -1,7 +1,7 @@
-import DBclasses.DBConnectionFactory;
-import Entity.Offer;
+import ru.dbclasses.DBConnectionFactory;
+import ru.entity.Offer;
 import org.junit.Test;
-import Repository.OfferRepository;
+import ru.repository.OfferRepository;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

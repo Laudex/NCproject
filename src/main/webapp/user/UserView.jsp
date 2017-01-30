@@ -1,7 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import ="java.util.List" %>
-<%@ page import="Entity.User" %>
-<%@ page import="java.util.Iterator" %>
 
 <html>
 <head>

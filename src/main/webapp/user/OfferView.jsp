@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import ="java.util.List" %>
-<%@ page import="Entity.Offer" %>
+<%@ page import="ru.entity.Offer" %>
 <%@ page import="java.util.Iterator" %>
 <html>
 <head>
@@ -22,5 +22,6 @@ Offer List of <%=request.getAttribute("name")%>
             <% }
 }%>
 </ul>
+
 </body>
 </html>
