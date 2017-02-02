@@ -15,7 +15,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -42,22 +44,33 @@ public class OfferViewServlet extends HttpServlet {
                 List<Offer> list = rep3.query(spec3);
                 listOffers.add(list.get(0));
             }
+            HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(15*60);
+            session.setAttribute("userId",id);
+            session.setAttribute("userName",name);
+            session.setAttribute("list",listOffers);
             request.setAttribute("list",listOffers);
             request.setAttribute("name",name);
             request.setAttribute("userId",id);
-            request.setAttribute("error","nope");
+            request.getRequestDispatcher("/user/OfferView.jsp").include(request,response);
             RequestDispatcher dispatcher = request.getRequestDispatcher("user/OfferView.jsp");
             dispatcher.forward(request,response);
         } catch(IndexOutOfBoundsException e){
-            String error = "This name was not found! Try again!";
-            request.setAttribute("error",error);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("user/OfferView.jsp");
-            dispatcher.forward(request,response);
+            PrintWriter out = response.getWriter();
+            out.print("This name was not found! Try again!");
+            out.close();
         }
 
     }
 
-    /*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }*/
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        HttpSession session = request.getSession(false);
+        PrintWriter out = response.getWriter();
+        if (session != null){
+            request.getRequestDispatcher("/user/OfferView.jsp").include(request,response);
+        } else{
+            out.print("At first, enter your name!");
+        }
+    }
 }
