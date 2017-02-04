@@ -10,14 +10,19 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "UserViewServlet")
-public class UserViewServlet extends HttpServlet {
+
+@WebServlet(name = "OfferBuyServlet")
+public class OfferBuyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("user/UserView.jsp").include(request,response);
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("userId") != null) {
+            request.getRequestDispatcher("/user/OfferBuy.jsp").include(request,response);
+        } else {
+            response.sendRedirect("/userView");
+        }
     }
 }

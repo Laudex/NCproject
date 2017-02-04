@@ -4,6 +4,22 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <servlet>
+        <servlet-name>mainServlet</servlet-name>
+        <servlet-class>ru.servlets.MainServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>offerGetServlet</servlet-name>
+        <servlet-class>ru.servlets.OfferGetServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>offerRemoveServlet</servlet-name>
+        <servlet-class>ru.servlets.OfferRemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>offerRemServlet</servlet-name>
+        <servlet-class>ru.servlets.OfferRemServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>userViewServlet</servlet-name>
         <servlet-class>ru.servlets.UserViewServlet</servlet-class>
     </servlet>
@@ -15,10 +31,26 @@
         <servlet-name>offerBuyServlet</servlet-name>
         <servlet-class>ru.servlets.OfferBuyServlet</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>mainServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>offerGetServlet</servlet-name>
+        <url-pattern>/offerGet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>offerRemoveServlet</servlet-name>
+        <url-pattern>/offerRemove</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>offerRemServlet</servlet-name>
+        <url-pattern>/offerRem</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>userViewServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/userView</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

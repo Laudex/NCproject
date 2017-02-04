@@ -19,5 +19,7 @@ Offer List of <%=session.getAttribute("userName")%>
             <% }
 %>
 </ul>
+<a href = "/offerBuy">Buy offer</a>
+<a href = "/offerRemove">Remove offer</a>
 </body>
 </html>

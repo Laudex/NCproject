@@ -11,6 +11,12 @@ public class Orders {
 
     }
 
+    public Orders(int userId, int offerId, String startDate) {
+        this.userId = userId;
+        this.offerId = offerId;
+        this.startDate = startDate;
+    }
+
     public Orders(int orderId, int userId, int offerId, String startDate) {
         this.orderId = orderId;
         this.userId = userId;

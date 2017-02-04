@@ -2,14 +2,12 @@ package ru.servlets;
 
 import ru.entity.Offer;
 import ru.entity.Orders;
-import ru.entity.User;
 import ru.repository.OfferRepository;
 import ru.repository.OrderRepository;
-import ru.repository.UserRepository;
 import ru.specifications.EmptySpecification;
 import ru.specifications.OrderSpecificationByUserId;
-import ru.specifications.UserSpecificationByName;
-import javax.servlet.RequestDispatcher;
+
+import javax.persistence.criteria.Order;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,22 +16,28 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 
-@WebServlet(name = "OfferViewServlet")
-public class OfferViewServlet extends HttpServlet {
-
+@WebServlet(name = "OfferGetServlet")
+public class OfferGetServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
-        UserSpecificationByName spec = new UserSpecificationByName(name);
-        UserRepository rep = new UserRepository();
-        try {
-            List<User> listUsers = rep.query(spec);
-            int id = listUsers.get(0).getUserId();
-            OrderSpecificationByUserId spec2 = new OrderSpecificationByUserId(id);
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("userId") != null) {
+            PrintWriter out = response.getWriter();
+            int offerId = Integer.parseInt(request.getParameter("offerId"));
+            int userId = (Integer)session.getAttribute("userId");
+            Date dNow = new Date();
+            SimpleDateFormat ft =  new SimpleDateFormat("yyyy-MM-dd");
+            //out.print(ft.format(dNow));
+            Orders newOrder = new Orders(userId,offerId,ft.format(dNow));
+            OrderRepository rep = new OrderRepository();
+            rep.addOrders(newOrder);
+            OrderSpecificationByUserId spec2 = new OrderSpecificationByUserId(userId);
             OrderRepository rep2 = new OrderRepository();
             List<Orders> listOrders = rep2.query(spec2);
             OfferRepository rep3 = new OfferRepository();
@@ -44,33 +48,19 @@ public class OfferViewServlet extends HttpServlet {
                 List<Offer> list = rep3.query(spec3);
                 listOffers.add(list.get(0));
             }
-            HttpSession session = request.getSession();
-            session.setMaxInactiveInterval(15*60);
-            session.setAttribute("userId",id);
-            session.setAttribute("userName",name);
             session.setAttribute("list",listOffers);
-            request.setAttribute("list",listOffers);
-            request.setAttribute("name",name);
-            request.setAttribute("userId",id);
             request.getRequestDispatcher("/user/OfferView.jsp").include(request,response);
-            //RequestDispatcher dispatcher = request.getRequestDispatcher("user/OfferView.jsp");
-           // dispatcher.forward(request,response);
-        } catch(IndexOutOfBoundsException e){
-            PrintWriter out = response.getWriter();
-            out.print("This name was not found! Try again!");
-            out.close();
+        } else {
+            response.sendRedirect("/userView");
         }
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
         HttpSession session = request.getSession(false);
-        PrintWriter out = response.getWriter();
-        if (session != null){
+        if (session.getAttribute("userId") !=null){
             request.getRequestDispatcher("/user/OfferView.jsp").include(request,response);
-        } else{
-            out.print("At first, enter your name!");
+        } else {
+            response.sendRedirect("/userView");
         }
     }
 }
