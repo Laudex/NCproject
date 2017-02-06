@@ -10,16 +10,18 @@
 <%
     List<Offer> offerList = (List<Offer>) session.getAttribute("list");
 %>
-<form action="/offerRem" method="POST" >
-    <select name = "offerId">
+<table>
         <%for (Iterator<Offer> j = offerList.iterator(); j.hasNext(); ) {
                 Offer userOffer = j.next();
-        %><option value = "<%=userOffer.getOfferId()%>"><%=userOffer.getName()%></option>
+        %><form action= "/offerRem" method="POST">
+            <tr>
+            <td><%=userOffer.getName()%></td><input type="hidden" name="offerId" value = "<%=userOffer.getOfferId()%>">
+            <td><input type= "submit" value="Remove it!"></td>
+        </tr>
+        </form>
         <%
         }
         %>
-    </select>
-    <input type="submit" value="Remove">
-</form>
+</table>
 </body>
 </html>

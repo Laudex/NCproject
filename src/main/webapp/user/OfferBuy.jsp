@@ -16,8 +16,9 @@
     List<Offer> list = rep.query(spec);
     List<Offer> offerList = (List<Offer>) session.getAttribute("list");
 %>
-<form action="/offerGet" method="POST" >
-<select name = "offerId">
+
+<table>
+
     <%for (Iterator<Offer> i = list.iterator(); i.hasNext(); ){
         Offer offer = i.next();
         int k = 0;
@@ -28,12 +29,17 @@
         }
     }
     if (k == 0){
-        %><option value = "<%=offer.getOfferId()%>"><%=offer.getName()%></option>
+
+        %><form action = "/offerGet" method="POST">
+        <tr>
+        <td><%=offer.getName()%></td><input type="hidden" name="offerId" value = "<%=offer.getOfferId()%>">
+    <td><input type="submit" value="Get it!"></td>
+    </tr>
+</form>
+
     <%}
     }
     %>
-</select>
-    <input type="submit" value="Purchase">
-</form>
+</table>
 </body>
 </html>
