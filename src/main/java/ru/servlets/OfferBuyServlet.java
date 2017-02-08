@@ -20,7 +20,7 @@ public class OfferBuyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session.getAttribute("userId") != null) {
-            request.getRequestDispatcher("/user/OfferBuy.jsp").include(request,response);
+            request.getRequestDispatcher("/user/OfferBuy.jsp").include(request, response);
         } else {
             response.sendRedirect("/userView");
         }

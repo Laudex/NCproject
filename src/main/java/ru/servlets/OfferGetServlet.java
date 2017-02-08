@@ -1,5 +1,7 @@
 package ru.servlets;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.entity.Offer;
 import ru.entity.Orders;
 import ru.repository.OfferRepository;
@@ -28,19 +30,17 @@ public class OfferGetServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session.getAttribute("userId") != null) {
-            PrintWriter out = response.getWriter();
+            ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
             int offerId = Integer.parseInt(request.getParameter("offerId"));
             int userId = (Integer)session.getAttribute("userId");
             Date dNow = new Date();
             SimpleDateFormat ft =  new SimpleDateFormat("yyyy-MM-dd");
-            //out.print(ft.format(dNow));
             Orders newOrder = new Orders(userId,offerId,ft.format(dNow));
-            OrderRepository rep = new OrderRepository();
+            OrderRepository rep = (OrderRepository) context.getBean("orderRepository");
             rep.addOrders(newOrder);
             OrderSpecificationByUserId spec2 = new OrderSpecificationByUserId(userId);
-            OrderRepository rep2 = new OrderRepository();
-            List<Orders> listOrders = rep2.query(spec2);
-            OfferRepository rep3 = new OfferRepository();
+            List<Orders> listOrders = rep.query(spec2);
+            OfferRepository rep3 = (OfferRepository) context.getBean("offerRepository");
             List<Offer> listOffers = new ArrayList<Offer>();
             for(Iterator<Orders> i = listOrders.iterator(); i.hasNext();) {
                 String query = String.format("WHERE offer_id = %s", i.next().getOfferId());

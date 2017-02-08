@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userRepository" class="ru.repository.UserRepository">
+    </bean>
+    <bean id="offerRepository" class="ru.repository.OfferRepository">
+    </bean>
+    <bean id="orderRepository" class="ru.repository.OrderRepository">
+    </bean>
+    <bean id="attrRepository" class="ru.repository.AttrRepository">
+    </bean>
+    <bean id="attrValRepository" class="ru.repository.AttrValuesRepository">
+    </bean>
+</beans>

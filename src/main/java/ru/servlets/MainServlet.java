@@ -17,8 +17,8 @@ public class MainServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       HttpSession session = request.getSession();
-        if (session.getAttribute("userId") != null){
+        HttpSession session = request.getSession();
+        if (session.getAttribute("userId") != null) {
             response.sendRedirect("/offerView");
         } else {
             response.sendRedirect("/userView");
