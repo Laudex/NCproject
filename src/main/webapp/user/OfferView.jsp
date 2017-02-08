@@ -2,24 +2,36 @@
 <%@page import ="java.util.List" %>
 <%@ page import="ru.entity.Offer" %>
 <%@ page import="java.util.Iterator" %>
+<%@ page import="ru.specifications.EmptySpecification" %>
+<%@ page import="ru.repository.OfferRepository" %>
 <html>
 <head>
     <title>Offers</title>
 </head>
 <body>
-
-Offer List of <%=session.getAttribute("userName")%>
-<ul>
-<%List<Offer> offers= (List<Offer>)session.getAttribute("list");
-    for (Iterator<Offer> i = offers.iterator(); i.hasNext(); ){
-        Offer offer = i.next();
-        %>
-        <li><%=offer.getName() %></li>
-        <br>
-            <% }
+<%
+    EmptySpecification spec = new EmptySpecification();
+    OfferRepository rep = new OfferRepository();
+    List<Offer> offerList = (List<Offer>) session.getAttribute("list");
 %>
-</ul>
+Offer List of <%=session.getAttribute("userName")%>:
+<br>
+<table border="2px" cellpadding="10px">
+
+    <%for (Iterator<Offer> j = offerList.iterator(); j.hasNext(); ) {
+            Offer userOffer = j.next();
+    %>
+    <form action = "/offerRem" method="POST">
+        <tr>
+            <td><%=userOffer.getName()%> (Bought)</td><input type="hidden" name = "offerId" value="<%=userOffer.getOfferId()%>">
+            <td><input type="submit" value="Remove it!"></td>
+        </tr>
+    </form>
+
+    <%
+    }
+    %>
+</table>
 <a href = "/offerBuy">Buy offer</a>
-<a href = "/offerRemove">Remove offer</a>
 </body>
 </html>

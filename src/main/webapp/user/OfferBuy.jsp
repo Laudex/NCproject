@@ -17,7 +17,7 @@
     List<Offer> offerList = (List<Offer>) session.getAttribute("list");
 %>
 
-<table>
+<table border="2px" cellpadding="10px">
 
     <%for (Iterator<Offer> i = list.iterator(); i.hasNext(); ){
         Offer offer = i.next();
@@ -27,8 +27,8 @@
         if (offer.getOfferId() == userOffer.getOfferId()) {
             k++;
         }
-    }
-    if (k == 0){
+        }
+        if(k == 0) {
 
         %><form action = "/offerGet" method="POST">
         <tr>

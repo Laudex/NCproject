@@ -12,10 +12,6 @@
         <servlet-class>ru.servlets.OfferGetServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>offerRemoveServlet</servlet-name>
-        <servlet-class>ru.servlets.OfferRemoveServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>offerRemServlet</servlet-name>
         <servlet-class>ru.servlets.OfferRemServlet</servlet-class>
     </servlet>
@@ -38,10 +34,6 @@
     <servlet-mapping>
         <servlet-name>offerGetServlet</servlet-name>
         <url-pattern>/offerGet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>offerRemoveServlet</servlet-name>
-        <url-pattern>/offerRemove</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>offerRemServlet</servlet-name>
