@@ -29,7 +29,7 @@ INSERT INTO orders VALUES(8,9,5,'2016-02-07');
 INSERT INTO orders VALUES(9,4,2,'2016-11-15');
 INSERT INTO orders VALUES(10,1,1,'2016-07-22');
 
-select setval('orders_order_id_seq',10);
+select setval('orders_order_id_seq',(select max(order_id) from orders));
 
 INSERT INTO attr VALUES(1,'type');
 INSERT INTO attr VALUES(2,'traffic');
