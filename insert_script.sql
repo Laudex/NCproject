@@ -9,11 +9,13 @@ INSERT INTO users VALUES(8,'Name8',false);
 INSERT INTO users VALUES(9,'Name9',false);
 INSERT INTO users VALUES(10,'Name10',false);
 
+
 INSERT INTO offer VALUES(1,'Offer 1');
 INSERT INTO offer VALUES(2,'Offer 2');
 INSERT INTO offer VALUES(3,'Offer 3');
 INSERT INTO offer VALUES(4,'Offer 4');
 INSERT INTO offer VALUES(5,'Offer 5');
+
 
 
 INSERT INTO orders VALUES(1,5,2,'2016-12-16');
@@ -26,6 +28,8 @@ INSERT INTO orders VALUES(7,6,4,'2016-05-28');
 INSERT INTO orders VALUES(8,9,5,'2016-02-07');
 INSERT INTO orders VALUES(9,4,2,'2016-11-15');
 INSERT INTO orders VALUES(10,1,1,'2016-07-22');
+
+select setval('orders_order_id_seq',10);
 
 INSERT INTO attr VALUES(1,'type');
 INSERT INTO attr VALUES(2,'traffic');
