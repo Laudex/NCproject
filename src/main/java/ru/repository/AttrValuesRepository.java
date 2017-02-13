@@ -1,39 +1,50 @@
 package ru.repository;
 
-import ru.dbclasses.DBChanger;
-import ru.dbclasses.DBConnection;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import ru.entity.AttrValues;
 import ru.interfaces.repository.IAttrValuesRepository;
 import ru.interfaces.specification.Specification;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 
 public class AttrValuesRepository implements IAttrValuesRepository {
+
+    private JdbcTemplate jdbcTemplate;
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
+    }
     public void addAttrValues(AttrValues attrValues) {
         String sqlQuery = String.format("INSERT INTO attr_values (offer_id, attr_id, value) VALUES (%s,%s,\'%s\');", attrValues.getOfferId(),attrValues.getAttrId(),attrValues.getValue());
-        System.out.println(sqlQuery);
-        DBChanger.changeEntity(sqlQuery);
+        jdbcTemplate.update(sqlQuery);
     }
 
 
     public void removeAttrValues(AttrValues attrValues) {
         String sqlQuery = String.format("DELETE FROM attr_values WHERE attr_id = %s AND offer_id = %s;",attrValues.getAttrId(),attrValues.getOfferId());
-        System.out.println(sqlQuery);
-        DBChanger.changeEntity(sqlQuery);
+        jdbcTemplate.update(sqlQuery);
     }
 
     public void updateAttrValues(AttrValues attrValues) {
         String sqlQuery = String.format("UPDATE attr_values SET value = \'%s\' WHERE offer_id = %s AND attr_id = %s;",attrValues.getValue(),attrValues.getOfferId(),attrValues.getAttrId());
-        System.out.println(sqlQuery);
-        DBChanger.changeEntity(sqlQuery);
+        jdbcTemplate.update(sqlQuery);
     }
 
     public List query(Specification specification) {
-        List<AttrValues> specificAttrsValues = new ArrayList<AttrValues>();
         String sql = "SELECT * FROM attr_values " + specification.toSqlClauses();
-        DBConnection.selectAttrsValues(sql,specificAttrsValues);
+        List<AttrValues> specificAttrsValues = this.jdbcTemplate.query(sql, new RowMapper<AttrValues>(){
+            public AttrValues mapRow(ResultSet rs, int rowNum) throws SQLException {
+                AttrValues nextAttrValues = new AttrValues();
+                nextAttrValues.setOfferId(rs.getInt("offer_id"));
+                nextAttrValues.setAttrId(rs.getInt("attr_id"));
+                nextAttrValues.setValue(rs.getString("value"));
+                return nextAttrValues;
+            }
+        });
         return specificAttrsValues;
     }
 }

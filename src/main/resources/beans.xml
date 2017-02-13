@@ -4,13 +4,28 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="userRepository" class="ru.repository.UserRepository">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     <bean id="offerRepository" class="ru.repository.OfferRepository">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     <bean id="orderRepository" class="ru.repository.OrderRepository">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     <bean id="attrRepository" class="ru.repository.AttrRepository">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
     <bean id="attrValRepository" class="ru.repository.AttrValuesRepository">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://127.0.0.1:5432/NCproject"/>
+        <property name="username" value="postgres"/>
+        <property name="password" value="1"/>
     </bean>
 </beans>

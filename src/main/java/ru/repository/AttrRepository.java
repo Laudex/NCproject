@@ -1,43 +1,53 @@
 package ru.repository;
 
-import ru.dbclasses.DBChanger;
-import ru.dbclasses.DBConnection;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import ru.entity.Attr;
 import ru.interfaces.repository.IAttrRepository;
 import ru.interfaces.specification.Specification;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 
 public class AttrRepository implements IAttrRepository {
 
+    private JdbcTemplate jdbcTemplate;
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
 
     public void addAttr(Attr attr) {
         String sqlQuery = String.format("INSERT INTO attr (attr_id, name) VALUES (%s,\'%s\');", attr.getAttrId(),attr.getName());
-        System.out.println(sqlQuery);
-        DBChanger.changeEntity(sqlQuery);
+        jdbcTemplate.update(sqlQuery);
     }
 
 
     public void removeAttr(Attr attr) {
         String sqlQuery = String.format("DELETE FROM attr WHERE attr_id = %s;",attr.getAttrId());
-        System.out.println(sqlQuery);
-        DBChanger.changeEntity(sqlQuery);
+        jdbcTemplate.update(sqlQuery);
     }
 
 
     public void updateAttr(Attr attr) {
         String sqlQuery = String.format("UPDATE attr SET name = \'%s\' WHERE attr_id = %s;",attr.getName(),attr.getAttrId());
-        System.out.println(sqlQuery);
-        DBChanger.changeEntity(sqlQuery);
+        jdbcTemplate.update(sqlQuery);
     }
 
 
     public List query(Specification specification) {
-        List<Attr> specificAttrs = new ArrayList<Attr>();
         String sql = "SELECT * FROM attr " + specification.toSqlClauses();
-        DBConnection.selectAttrs(sql,specificAttrs);
+        List<Attr> specificAttrs = this.jdbcTemplate.query(sql, new RowMapper<Attr>(){
+            public Attr mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Attr nextAttr = new Attr();
+                nextAttr.setAttrId(rs.getInt("attr_id"));
+                nextAttr.setName(rs.getString("name"));
+                return nextAttr;
+            }
+        });
         return specificAttrs;
     }
 }
