@@ -5,22 +5,21 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.io.InputStream;
+import java.nio.file.Paths;
 
-/**
- * Created by ааааааааааеееееееее on 17.02.2017.
- */
+@MultipartConfig
 @WebServlet(name = "AdminAddOfferServlet")
 public class AdminAddOfferServlet extends HttpServlet {
-    private Random random = new Random();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        Part filePart = request.getPart("file");
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        InputStream fileContent = filePart.getInputStream();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
