@@ -39,32 +39,42 @@ public class OfferViewServlet extends HttpServlet {
         try {
             List<User> listUsers = rep.query(spec);
             int id = listUsers.get(0).getUserId();
-            OrderSpecificationByUserId spec2 = new OrderSpecificationByUserId(id);
-            OrderRepository rep2 = (OrderRepository) context.getBean("orderRepository");
-            List<Orders> listOrders = rep2.query(spec2);
-            OfferRepository rep3 = (OfferRepository) context.getBean("offerRepository");
-            List<Offer> listOffers = new ArrayList<Offer>();
-            for (Iterator<Orders> i = listOrders.iterator(); i.hasNext(); ) {
-                String query = String.format("WHERE offer_id = %s", i.next().getOfferId());
-                EmptySpecification spec3 = new EmptySpecification(query);
-                List<Offer> list = rep3.query(spec3);
-                listOffers.add(list.get(0));
+            boolean isAdmin = listUsers.get(0).getIsAdmin();
+            if (isAdmin == false) {
+                OrderSpecificationByUserId spec2 = new OrderSpecificationByUserId(id);
+                OrderRepository rep2 = (OrderRepository) context.getBean("orderRepository");
+                List<Orders> listOrders = rep2.query(spec2);
+                OfferRepository rep3 = (OfferRepository) context.getBean("offerRepository");
+                List<Offer> listOffers = new ArrayList<Offer>();
+                for (Iterator<Orders> i = listOrders.iterator(); i.hasNext(); ) {
+                    String query = String.format("WHERE offer_id = %s", i.next().getOfferId());
+                    EmptySpecification spec3 = new EmptySpecification(query);
+                    List<Offer> list = rep3.query(spec3);
+                    listOffers.add(list.get(0));
+                }
+                HttpSession session = request.getSession();
+                //session.setMaxInactiveInterval(15 * 60);
+                session.setAttribute("userId", id);
+                session.setAttribute("userName", name);
+                session.setAttribute("list", listOffers);
+                session.setAttribute("admin", isAdmin);
+                request.getRequestDispatcher("/user/OfferView.jsp").include(request, response);
+                //RequestDispatcher dispatcher = request.getRequestDispatcher("user/OfferView.jsp");
+                // dispatcher.forward(request,response);
+            } else {
+                HttpSession session = request.getSession();
+                session.setAttribute("userId", id);
+                session.setAttribute("userName", name);
+                session.setAttribute("admin", isAdmin);
+                response.sendRedirect("/adminPanel");
+
             }
-            HttpSession session = request.getSession();
-            session.setMaxInactiveInterval(15 * 60);
-            session.setAttribute("userId", id);
-            session.setAttribute("userName", name);
-            session.setAttribute("list", listOffers);
-            //request.setAttribute("list",listOffers);
-            //request.setAttribute("name",name);
-            //request.setAttribute("userId",id);
-            request.getRequestDispatcher("/user/OfferView.jsp").include(request, response);
-            //RequestDispatcher dispatcher = request.getRequestDispatcher("user/OfferView.jsp");
-            // dispatcher.forward(request,response);
         } catch (IndexOutOfBoundsException e) {
-            request.setAttribute("enterError", "This name was not found! Try again!");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/user/UserView.jsp");
-            dispatcher.forward(request, response);
+            HttpSession session = request.getSession();
+            session.setAttribute("enterError", "This name was not found! Try again!");
+            response.sendRedirect("/userView");
+            //RequestDispatcher dispatcher = request.getRequestDispatcher("/user/UserView.jsp");
+            //dispatcher.forward(request, response);
         }
 
     }
@@ -73,8 +83,13 @@ public class OfferViewServlet extends HttpServlet {
         response.setContentType("text/html");
         HttpSession session = request.getSession(false);
         PrintWriter out = response.getWriter();
-        if (session.getAttribute("userId") != null) {
-            request.getRequestDispatcher("/user/OfferView.jsp").include(request, response);
+        if (session.getAttribute("admin") != null) {
+            boolean isAdmin = (Boolean) session.getAttribute("admin");
+            if (isAdmin == false) {
+                request.getRequestDispatcher("/user/OfferView.jsp").include(request, response);
+            } else {
+                response.sendRedirect("/adminPanel");
+            }
         } else {
             response.sendRedirect("/userView");
         }

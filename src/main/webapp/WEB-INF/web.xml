@@ -12,6 +12,10 @@
         <servlet-class>ru.servlets.OfferGetServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>adminPanelServlet</servlet-name>
+        <servlet-class>ru.servlets.AdminPanelServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>offerRemServlet</servlet-name>
         <servlet-class>ru.servlets.OfferRemServlet</servlet-class>
     </servlet>
@@ -26,6 +30,14 @@
     <servlet>
         <servlet-name>offerBuyServlet</servlet-name>
         <servlet-class>ru.servlets.OfferBuyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminRemoveServlet</servlet-name>
+        <servlet-class>ru.servlets.AdminRemoveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>adminAddOfferServlet</servlet-name>
+        <servlet-class>ru.servlets.AdminAddOfferServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>mainServlet</servlet-name>
@@ -52,6 +64,18 @@
     <servlet-mapping>
         <servlet-name>offerViewServlet</servlet-name>
         <url-pattern>/offerView</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminPanelServlet</servlet-name>
+        <url-pattern>/adminPanel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminRemoveServlet</servlet-name>
+        <url-pattern>/adminRemove</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adminAddOfferServlet</servlet-name>
+        <url-pattern>/addOffer</url-pattern>
     </servlet-mapping>
 
 

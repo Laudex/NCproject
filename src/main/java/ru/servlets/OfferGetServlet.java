@@ -32,24 +32,24 @@ public class OfferGetServlet extends HttpServlet {
         if (session.getAttribute("userId") != null) {
             ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
             int offerId = Integer.parseInt(request.getParameter("offerId"));
-            int userId = (Integer)session.getAttribute("userId");
+            int userId = (Integer) session.getAttribute("userId");
             Date dNow = new Date();
-            SimpleDateFormat ft =  new SimpleDateFormat("yyyy-MM-dd");
-            Orders newOrder = new Orders(userId,offerId,ft.format(dNow));
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+            Orders newOrder = new Orders(userId, offerId, ft.format(dNow));
             OrderRepository rep = (OrderRepository) context.getBean("orderRepository");
             rep.addOrders(newOrder);
             OrderSpecificationByUserId spec2 = new OrderSpecificationByUserId(userId);
             List<Orders> listOrders = rep.query(spec2);
             OfferRepository rep3 = (OfferRepository) context.getBean("offerRepository");
             List<Offer> listOffers = new ArrayList<Offer>();
-            for(Iterator<Orders> i = listOrders.iterator(); i.hasNext();) {
+            for (Iterator<Orders> i = listOrders.iterator(); i.hasNext(); ) {
                 String query = String.format("WHERE offer_id = %s", i.next().getOfferId());
                 EmptySpecification spec3 = new EmptySpecification(query);
                 List<Offer> list = rep3.query(spec3);
                 listOffers.add(list.get(0));
             }
-            session.setAttribute("list",listOffers);
-            request.getRequestDispatcher("/user/OfferView.jsp").include(request,response);
+            session.setAttribute("list", listOffers);
+            request.getRequestDispatcher("/user/OfferView.jsp").include(request, response);
         } else {
             response.sendRedirect("/userView");
         }
@@ -57,8 +57,13 @@ public class OfferGetServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("userId") !=null){
-            request.getRequestDispatcher("/user/OfferView.jsp").include(request,response);
+        if (session.getAttribute("admin") != null) {
+            boolean isAdmin = (Boolean) session.getAttribute("admin");
+            if (isAdmin == false) {
+                response.sendRedirect("/offerView");
+            } else {
+                response.sendRedirect("/adminPanel");
+            }
         } else {
             response.sendRedirect("/userView");
         }

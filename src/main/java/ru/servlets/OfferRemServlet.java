@@ -61,8 +61,13 @@ public class OfferRemServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("userId") !=null){
-            request.getRequestDispatcher("/user/OfferView.jsp").include(request,response);
+        if (session.getAttribute("admin") != null) {
+            boolean isAdmin = (Boolean) session.getAttribute("admin");
+            if (isAdmin == false) {
+                response.sendRedirect("/offerView");
+            } else {
+                response.sendRedirect("/adminPanel");
+            }
         } else {
             response.sendRedirect("/userView");
         }

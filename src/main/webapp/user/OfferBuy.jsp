@@ -4,6 +4,8 @@
 <%@ page import="ru.repository.OfferRepository" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Iterator" %>
+<%@ page import="org.springframework.context.ApplicationContext" %>
+<%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -11,8 +13,9 @@
 </head>
 <body>
 <%
+    ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
     EmptySpecification spec = new EmptySpecification();
-    OfferRepository rep = new OfferRepository();
+    OfferRepository rep = (OfferRepository) context.getBean("offerRepository");
     List<Offer> list = rep.query(spec);
     List<Offer> offerList = (List<Offer>) session.getAttribute("list");
 %>

@@ -4,14 +4,14 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="ru.specifications.EmptySpecification" %>
 <%@ page import="ru.repository.OfferRepository" %>
+<%@ page import="org.springframework.context.ApplicationContext" %>
+<%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext" %>
 <html>
 <head>
     <title>Offers</title>
 </head>
 <body>
 <%
-    EmptySpecification spec = new EmptySpecification();
-    OfferRepository rep = new OfferRepository();
     List<Offer> offerList = (List<Offer>) session.getAttribute("list");
 %>
 Offer List of <%=session.getAttribute("userName")%>:

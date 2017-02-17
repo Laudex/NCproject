@@ -5,9 +5,10 @@
     <title>Users</title>
 </head>
 <body>
-<% if (request.getAttribute("enterError")!=null){
-    %><p color ="red"><%=request.getAttribute("enterError")%></p>
+<% if (session.getAttribute("enterError")!=null){
+    %><p color ="red"><%=session.getAttribute("enterError")%></p>
 <%
+    session.setAttribute("enterError",null);
 }
 %>
 <h3>Введите имя пользователя:</h3>

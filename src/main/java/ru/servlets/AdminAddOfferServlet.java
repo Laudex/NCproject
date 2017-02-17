@@ -1,18 +1,24 @@
 package ru.servlets;
 
-import javax.servlet.RequestDispatcher;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
-
-@WebServlet(name = "OfferBuyServlet")
-public class OfferBuyServlet extends HttpServlet {
+/**
+ * Created by ааааааааааеееееееее on 17.02.2017.
+ */
+@WebServlet(name = "AdminAddOfferServlet")
+public class AdminAddOfferServlet extends HttpServlet {
+    private Random random = new Random();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -22,12 +28,13 @@ public class OfferBuyServlet extends HttpServlet {
         if (session.getAttribute("admin") != null) {
             boolean isAdmin = (Boolean) session.getAttribute("admin");
             if (isAdmin == false) {
-                request.getRequestDispatcher("/user/OfferBuy.jsp").include(request, response);
+                response.sendRedirect("/offerView");
             } else {
-                response.sendRedirect("/adminPanel");
+                request.getRequestDispatcher("/admin/AddOffer.jsp").include(request, response);
             }
         } else {
             response.sendRedirect("/userView");
         }
+
     }
 }
