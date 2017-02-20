@@ -1,4 +1,4 @@
-import ru.dbclasses.DBConnectionFactory;
+/*import ru.dbclasses.DBConnectionFactory;
 import ru.entity.AttrValues;
 import org.junit.Test;
 import ru.repository.AttrValuesRepository;
@@ -101,3 +101,4 @@ public class AttrValuesRepositoryTest {
     }
 
 }
+*/

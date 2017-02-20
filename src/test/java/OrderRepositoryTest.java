@@ -1,4 +1,4 @@
-import ru.dbclasses.DBConnectionFactory;
+/*import ru.dbclasses.DBConnectionFactory;
 import ru.entity.Orders;
 import org.junit.Test;
 import ru.repository.OrderRepository;
@@ -106,3 +106,4 @@ public class OrderRepositoryTest {
     }
 
 }
+*/

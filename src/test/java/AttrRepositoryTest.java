@@ -1,4 +1,4 @@
-import ru.dbclasses.DBConnectionFactory;
+/*import ru.dbclasses.DBConnectionFactory;
 import ru.entity.Attr;
 import org.junit.Test;
 import ru.repository.AttrRepository;
@@ -95,4 +95,4 @@ public class AttrRepositoryTest {
         assertEquals(attr.getName(),testAttr.getName());
     }
 
-}
+}*/
