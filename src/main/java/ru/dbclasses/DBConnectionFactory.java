@@ -1,7 +1,7 @@
 package ru.dbclasses;
 
 
-import org.springframework.jdbc.core.JdbcTemplate;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;

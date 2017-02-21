@@ -19,9 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by ааааааааааеееееееее on 15.02.2017.
- */
+
 @WebServlet(name = "AdminRemoveServlet")
 public class AdminRemoveServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -54,7 +52,7 @@ public class AdminRemoveServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session.getAttribute("admin") != null) {
             boolean isAdmin = (Boolean) session.getAttribute("admin");
-            if (isAdmin == false) {
+            if (!isAdmin) {
                 response.sendRedirect("/offerView");
             } else {
                 response.sendRedirect("/adminPanel");

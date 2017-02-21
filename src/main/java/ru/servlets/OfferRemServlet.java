@@ -16,16 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by ааааааааааеееееееее on 04.02.2017.
- */
 @WebServlet(name = "OfferRemServlet")
 public class OfferRemServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -63,7 +57,7 @@ public class OfferRemServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session.getAttribute("admin") != null) {
             boolean isAdmin = (Boolean) session.getAttribute("admin");
-            if (isAdmin == false) {
+            if (!isAdmin) {
                 response.sendRedirect("/offerView");
             } else {
                 response.sendRedirect("/adminPanel");

@@ -1,8 +1,5 @@
 package ru.servlets;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -17,7 +14,6 @@ import ru.entity.Offer;
 import ru.repository.AttrValuesRepository;
 import ru.repository.OfferRepository;
 import ru.specifications.OfferSpecificationByName;
-import sun.misc.IOUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -85,7 +81,7 @@ public class AdminAddOfferServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session.getAttribute("admin") != null) {
             boolean isAdmin = (Boolean) session.getAttribute("admin");
-            if (isAdmin == false) {
+            if (!isAdmin) {
                 response.sendRedirect("/offerView");
             } else {
                 request.getRequestDispatcher("/admin/AddOffer.jsp").include(request, response);

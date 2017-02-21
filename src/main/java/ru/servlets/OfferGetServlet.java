@@ -8,8 +8,6 @@ import ru.repository.OfferRepository;
 import ru.repository.OrderRepository;
 import ru.specifications.EmptySpecification;
 import ru.specifications.OrderSpecificationByUserId;
-
-import javax.persistence.criteria.Order;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,7 +56,7 @@ public class OfferGetServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session.getAttribute("admin") != null) {
             boolean isAdmin = (Boolean) session.getAttribute("admin");
-            if (isAdmin == false) {
+            if (!isAdmin) {
                 response.sendRedirect("/offerView");
             } else {
                 response.sendRedirect("/adminPanel");

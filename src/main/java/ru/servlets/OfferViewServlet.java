@@ -1,9 +1,7 @@
 package ru.servlets;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 import ru.entity.Offer;
 import ru.entity.Orders;
 import ru.entity.User;
@@ -13,8 +11,6 @@ import ru.repository.UserRepository;
 import ru.specifications.EmptySpecification;
 import ru.specifications.OrderSpecificationByUserId;
 import ru.specifications.UserSpecificationByName;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +36,7 @@ public class OfferViewServlet extends HttpServlet {
             List<User> listUsers = rep.query(spec);
             int id = listUsers.get(0).getUserId();
             boolean isAdmin = listUsers.get(0).getIsAdmin();
-            if (isAdmin == false) {
+            if (!isAdmin) {
                 OrderSpecificationByUserId spec2 = new OrderSpecificationByUserId(id);
                 OrderRepository rep2 = (OrderRepository) context.getBean("orderRepository");
                 List<Orders> listOrders = rep2.query(spec2);
@@ -85,7 +81,7 @@ public class OfferViewServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         if (session.getAttribute("admin") != null) {
             boolean isAdmin = (Boolean) session.getAttribute("admin");
-            if (isAdmin == false) {
+            if (!isAdmin) {
                 request.getRequestDispatcher("/user/OfferView.jsp").include(request, response);
             } else {
                 response.sendRedirect("/adminPanel");
