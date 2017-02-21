@@ -9,6 +9,10 @@ public class Offer {
 
     }
 
+    public Offer(String name) {
+        this.name = name;
+    }
+
     public Offer(int offerId, String name) {
         this.offerId = offerId;
         this.name = name;

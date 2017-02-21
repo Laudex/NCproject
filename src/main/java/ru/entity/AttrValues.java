@@ -9,6 +9,10 @@ public class AttrValues {
     public AttrValues() {
     }
 
+    public AttrValues(int offerId) {
+        this.offerId = offerId;
+    }
+
     public AttrValues(int offerId, int attrId, String value) {
         this.offerId = offerId;
         this.attrId = attrId;

@@ -2,8 +2,10 @@ package ru.servlets;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.entity.AttrValues;
 import ru.entity.Offer;
 import ru.entity.Orders;
+import ru.repository.AttrValuesRepository;
 import ru.repository.OfferRepository;
 import ru.repository.OrderRepository;
 import ru.specifications.OrderSpecificationByOfferId;
@@ -34,10 +36,13 @@ public class AdminRemoveServlet extends HttpServlet {
                 session.setAttribute("deleteError", "You can not delete this offer, because some user purchased this!");
                 request.getRequestDispatcher("/admin/AdminView.jsp").include(request,response);
             } else {
+                AttrValues attrValues = new AttrValues(offerId);
+                AttrValuesRepository rep2 = (AttrValuesRepository) context.getBean("attrValRepository");
+                rep2.removeAttrValues(attrValues);
                 Offer deleteOffer = new Offer();
                 deleteOffer.setOffer_id(offerId);
-                OfferRepository rep2 = (OfferRepository)context.getBean("offerRepository");
-                rep2.removeOffer(deleteOffer);
+                OfferRepository rep3 = (OfferRepository)context.getBean("offerRepository");
+                rep3.removeOffer(deleteOffer);
                 response.sendRedirect("/adminPanel");
             }
         } else {
