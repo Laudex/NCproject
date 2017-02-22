@@ -1,104 +1,50 @@
-/*import ru.dbclasses.DBConnectionFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.entity.AttrValues;
 import org.junit.Test;
 import ru.repository.AttrValuesRepository;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
+import ru.specifications.EmptySpecification;
+import java.util.List;
 import static org.junit.Assert.*;
 
 
 public class AttrValuesRepositoryTest {
+    ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
     @Test
     public void addAttrValues() throws Exception {
-        AttrValues attrValues = new AttrValues(5,4,"30 days");
-        AttrValuesRepository rep = new AttrValuesRepository();
+        AttrValues attrValues = new AttrValues(5,4,"test");
+        AttrValuesRepository rep = (AttrValuesRepository)context.getBean("attrValRepository");
         rep.addAttrValues(attrValues);
-        AttrValues testAttrValues = new AttrValues();
-        String sqlQuery = String.format("SELECT * FROM attr_values WHERE offer_id = %s AND attr_id = %s",attrValues.getOfferId(),attrValues.getAttrId());
-        Connection connection;
-        Statement stmt ;
-        try {
-            connection = DBConnectionFactory.conFactory();
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sqlQuery);
-            if(rs.next()){
-                testAttrValues.setOfferId(rs.getInt("offer_id"));
-                testAttrValues.setAttrId(rs.getInt("attr_id"));
-                testAttrValues.setValue(rs.getString("value"));
-            }
-            rs.close();
-            stmt.close();
-            connection.close();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }
-        assertEquals(attrValues.getOfferId(),testAttrValues.getOfferId());
-        assertEquals(attrValues.getAttrId(),testAttrValues.getAttrId());
-        assertEquals(attrValues.getValue(),testAttrValues.getValue());
+        String sqlQuery = String.format("WHERE offer_id = %s AND attr_id = %s",attrValues.getOfferId(),attrValues.getAttrId());
+        EmptySpecification spec = new EmptySpecification(sqlQuery);
+        List<AttrValues> testAttrValues = rep.query(spec);
+        assertEquals(attrValues.getOfferId(),testAttrValues.get(0).getOfferId());
+        assertEquals(attrValues.getAttrId(),testAttrValues.get(0).getAttrId());
+        assertEquals(attrValues.getValue(),testAttrValues.get(0).getValue());
     }
 
     @Test
     public void removeAttrValues() throws Exception {
         AttrValues attrValues = new AttrValues(5,4,"30 days");
-        AttrValuesRepository rep = new AttrValuesRepository();
+        AttrValuesRepository rep = (AttrValuesRepository) context.getBean("attrValRepository");
         rep.removeAttrValues(attrValues);
-        AttrValues testAttrValues = null;
-        String sqlQuery = String.format("SELECT * FROM attr_values WHERE offer_id = %s AND attr_id = %s",attrValues.getOfferId(),attrValues.getAttrId());
-        Connection connection;
-        Statement stmt;
-        try {
-            connection = DBConnectionFactory.conFactory();
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sqlQuery);
-            if(rs.next()){
-                testAttrValues = new AttrValues();
-                testAttrValues.setOfferId(rs.getInt("offer_id"));
-                testAttrValues.setAttrId(rs.getInt("attr_id"));
-                testAttrValues.setValue(rs.getString("value"));
-            }
-            rs.close();
-            stmt.close();
-            connection.close();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }
-        assertNull(testAttrValues);
+        String sqlQuery = String.format("WHERE offer_id = %s AND attr_id = %s",attrValues.getOfferId(),attrValues.getAttrId());
+        EmptySpecification spec = new EmptySpecification(sqlQuery);
+        List<AttrValues> testAttrValues = rep.query(spec);
+        assertEquals(testAttrValues.size(),0);
     }
 
     @Test
     public void updateAttrValues() throws Exception {
         AttrValues attrValues = new AttrValues(5,4,"30 days");
-        AttrValuesRepository rep = new AttrValuesRepository();
+        AttrValuesRepository rep = (AttrValuesRepository)context.getBean("attrValRepository");
         rep.updateAttrValues(attrValues);
-        AttrValues testAttrValues = new AttrValues();
-        String sqlQuery = String.format("SELECT * FROM attr_values WHERE offer_id = %s AND attr_id = %s",attrValues.getOfferId(),attrValues.getAttrId());
-        Connection connection;
-        Statement stmt;
-        try {
-            connection = DBConnectionFactory.conFactory();
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sqlQuery);
-            if(rs.next()){
-                testAttrValues.setOfferId(rs.getInt("offer_id"));
-                testAttrValues.setAttrId(rs.getInt("attr_id"));
-                testAttrValues.setValue(rs.getString("value"));
-            }
-            rs.close();
-            stmt.close();
-            connection.close();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }
-        assertEquals(attrValues.getOfferId(),testAttrValues.getOfferId());
-        assertEquals(attrValues.getAttrId(),testAttrValues.getAttrId());
-        assertEquals(attrValues.getValue(),testAttrValues.getValue());
+        String sqlQuery = String.format("WHERE offer_id = %s AND attr_id = %s",attrValues.getOfferId(),attrValues.getAttrId());
+        EmptySpecification spec = new EmptySpecification(sqlQuery);
+        List<AttrValues> testAttrValues = rep.query(spec);
+        assertEquals(attrValues.getOfferId(),testAttrValues.get(0).getOfferId());
+        assertEquals(attrValues.getAttrId(),testAttrValues.get(0).getAttrId());
+        assertEquals(attrValues.getValue(),testAttrValues.get(0).getValue());
     }
 
 }
-*/

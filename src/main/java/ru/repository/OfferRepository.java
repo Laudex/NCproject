@@ -20,8 +20,13 @@ public class OfferRepository implements IOfferRepository {
     }
 
     public void addOffer(Offer offer) {
-        String sqlQuery = String.format("INSERT INTO offer (name) VALUES (\'%s\');", offer.getName());
-        jdbcTemplate.update(sqlQuery);
+        if (offer.getOfferId() != 0){
+            String sqlQuery = String.format("INSERT INTO offer (offer_id, name) VALUES (%s,\'%s\');",offer.getOfferId(), offer.getName());
+            jdbcTemplate.update(sqlQuery);
+        } else {
+            String sqlQuery = String.format("INSERT INTO offer (name) VALUES (\'%s\');", offer.getName());
+            jdbcTemplate.update(sqlQuery);
+        }
     }
 
     public void removeOffer(Offer offer) {

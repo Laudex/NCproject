@@ -20,8 +20,13 @@ public class OrderRepository implements IOrderRepository {
     }
 
     public void addOrders(Orders order) {
-        String sqlQuery = String.format("INSERT INTO orders (user_id, offer_id, start_date) VALUES (%s, %s, \'%s\');",order.getUserId(),order.getOfferId(),order.getStartDate());
-        jdbcTemplate.update(sqlQuery);
+        if (order.getOrderId() != 0){
+            String sqlQuery = String.format("INSERT INTO orders (order_id, user_id, offer_id, start_date) VALUES (%s,%s, %s, \'%s\');", order.getOrderId(),order.getUserId(), order.getOfferId(), order.getStartDate());
+            jdbcTemplate.update(sqlQuery);
+        } else {
+            String sqlQuery = String.format("INSERT INTO orders (user_id, offer_id, start_date) VALUES (%s, %s, \'%s\');", order.getUserId(), order.getOfferId(), order.getStartDate());
+            jdbcTemplate.update(sqlQuery);
+        }
     }
 
     public void removeOrders(Orders orders) {

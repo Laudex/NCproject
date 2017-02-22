@@ -11,6 +11,7 @@ public class Offer {
 
     public Offer(String name) {
         this.name = name;
+        this.offerId = 0;
     }
 
     public Offer(int offerId, String name) {

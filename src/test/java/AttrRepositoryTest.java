@@ -1,98 +1,50 @@
-/*import ru.dbclasses.DBConnectionFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.entity.Attr;
 import org.junit.Test;
 import ru.repository.AttrRepository;
+import ru.specifications.EmptySpecification;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 
 public class AttrRepositoryTest {
+    ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
     @Test
     public void addAttr() throws Exception {
         Attr attr = new Attr(5,"test");
-        AttrRepository rep = new AttrRepository();
+        AttrRepository rep = (AttrRepository)context.getBean("attrRepository");
         rep.addAttr(attr);
-        Attr testAttr = new Attr();
-        String sqlQuery = String.format("SELECT * FROM attr WHERE attr_id = %s",attr.getAttrId());
-        Connection connection;
-        Statement stmt;
-        try {
-            connection = DBConnectionFactory.conFactory();
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sqlQuery);
-            if(rs.next()){
-                testAttr.setAttrId(rs.getInt("attr_id"));
-                testAttr.setName(rs.getString("name"));
-            }
-            rs.close();
-            stmt.close();
-            connection.close();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }
-        assertEquals(attr.getAttrId(),testAttr.getAttrId());
-        assertEquals(attr.getName(),testAttr.getName());
+        String sqlQuery = String.format("WHERE attr_id = %s",attr.getAttrId());
+        EmptySpecification spec = new EmptySpecification(sqlQuery);
+        List<Attr> testAttr = rep.query(spec);
+        assertEquals(attr.getAttrId(),testAttr.get(0).getAttrId());
+        assertEquals(attr.getName(),testAttr.get(0).getName());
     }
 
     @Test
     public void removeAttr() throws Exception {
         Attr attr = new Attr(5,"test");
-        AttrRepository rep = new AttrRepository();
+        AttrRepository rep = (AttrRepository)context.getBean("attrRepository");
         rep.removeAttr(attr);
-        Attr testAttr = null;
-        String sqlQuery = String.format("SELECT * FROM attr WHERE attr_id = %s",attr.getAttrId());
-        Connection connection;
-        Statement stmt;
-        try {
-            connection = DBConnectionFactory.conFactory();
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sqlQuery);
-            if(rs.next()){
-                testAttr = new Attr();
-                testAttr.setAttrId(rs.getInt("attr_id"));
-                testAttr.setName(rs.getString("name"));
-            }
-            rs.close();
-            stmt.close();
-            connection.close();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }
-        assertNull(testAttr);
+        String sqlQuery = String.format("WHERE attr_id = %s",attr.getAttrId());
+        EmptySpecification spec = new EmptySpecification(sqlQuery);
+        List<Attr> testAttr = rep.query(spec);
+        assertEquals(testAttr.size(),0);
     }
 
     @Test
     public void updateAttr() throws Exception {
-        Attr attr = new Attr(4,"period");
-        AttrRepository rep = new AttrRepository();
+        Attr attr = new Attr(5,"period");
+        AttrRepository rep =(AttrRepository)context.getBean("attrRepository");
         rep.updateAttr(attr);
-        Attr testAttr = new Attr();
-        String sqlQuery = String.format("SELECT * FROM attr WHERE attr_id = %s",attr.getAttrId());
-        Connection connection;
-        Statement stmt;
-        try {
-            connection = DBConnectionFactory.conFactory();
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sqlQuery);
-            if(rs.next()){
-                testAttr.setAttrId(rs.getInt("attr_id"));
-                testAttr.setName(rs.getString("name"));
-            }
-            rs.close();
-            stmt.close();
-            connection.close();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }
-        assertEquals(attr.getAttrId(),testAttr.getAttrId());
-        assertEquals(attr.getName(),testAttr.getName());
+        String sqlQuery = String.format("WHERE attr_id = %s",attr.getAttrId());
+        EmptySpecification spec = new EmptySpecification(sqlQuery);
+        List<Attr> testAttr = rep.query(spec);
+        assertEquals(attr.getAttrId(),testAttr.get(0).getAttrId());
+        assertEquals(attr.getName(),testAttr.get(0).getName());
     }
 
-}*/
+}

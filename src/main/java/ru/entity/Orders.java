@@ -15,6 +15,7 @@ public class Orders {
         this.userId = userId;
         this.offerId = offerId;
         this.startDate = startDate;
+        this.orderId = 0;
     }
 
     public Orders(int orderId, int userId, int offerId, String startDate) {

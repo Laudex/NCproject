@@ -1,109 +1,52 @@
-/*import ru.dbclasses.DBConnectionFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.entity.Orders;
 import org.junit.Test;
 import ru.repository.OrderRepository;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
+import ru.specifications.EmptySpecification;
+import java.util.List;
 import static org.junit.Assert.*;
 
 
 public class OrderRepositoryTest {
+    ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
     @Test
     public void addOrders() throws Exception {
         Orders order = new Orders(100,1,2,"2013-12-12");
-        OrderRepository rep = new OrderRepository();
+        OrderRepository rep = (OrderRepository)context.getBean("orderRepository");
         rep.addOrders(order);
-        Orders testOrder = new Orders();
-        String sqlQuery = String.format("SELECT * FROM orders WHERE order_id = %s",order.getOrderId());
-        Connection connection;
-        Statement stmt;
-        try {
-            connection = DBConnectionFactory.conFactory();
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sqlQuery);
-            if(rs.next()){
-                testOrder.setOrderId(rs.getInt("order_id"));
-                testOrder.setUserId(rs.getInt("user_id"));
-                testOrder.setOfferId(rs.getInt("offer_id"));
-                testOrder.setStartDate(rs.getString("start_date"));
-            }
-            rs.close();
-            stmt.close();
-            connection.close();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }
-        assertEquals(order.getOrderId(),testOrder.getOrderId());
-        assertEquals(order.getUserId(),testOrder.getUserId());
-        assertEquals(order.getOfferId(),testOrder.getOfferId());
-        assertEquals(order.getStartDate(),testOrder.getStartDate());
+        String sqlQuery = String.format("WHERE order_id = %s",order.getOrderId());
+        EmptySpecification spec = new EmptySpecification(sqlQuery);
+        List<Orders> testOrder = rep.query(spec);
+        assertEquals(order.getOrderId(),testOrder.get(0).getOrderId());
+        assertEquals(order.getUserId(),testOrder.get(0).getUserId());
+        assertEquals(order.getOfferId(),testOrder.get(0).getOfferId());
+        assertEquals(order.getStartDate(),testOrder.get(0).getStartDate());
     }
 
     @Test
     public void removeOrders() throws Exception {
-        Orders order = new Orders(11,1,2,"2013-12-12");
-        OrderRepository rep = new OrderRepository();
+        Orders order = new Orders(100,1,2,"2013-12-12");
+        OrderRepository rep = (OrderRepository)context.getBean("orderRepository");
         rep.removeOrders(order);
-        Orders testOrder = null;
-        String sqlQuery = String.format("SELECT * FROM orders WHERE order_id = %s",order.getOrderId());
-        Connection connection;
-        Statement stmt;
-        try {
-            connection = DBConnectionFactory.conFactory();
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sqlQuery);
-            if(rs.next()){
-                testOrder = new Orders();
-                testOrder.setOrderId(rs.getInt("order_id"));
-                testOrder.setUserId(rs.getInt("user_id"));
-                testOrder.setOfferId(rs.getInt("offer_id"));
-                testOrder.setStartDate(rs.getString("start_date"));
-            }
-            rs.close();
-            stmt.close();
-            connection.close();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }
-        assertNull(testOrder);
+        String sqlQuery = String.format("WHERE order_id = %s",order.getOrderId());
+        EmptySpecification spec = new EmptySpecification(sqlQuery);
+        List<Orders> testOrder = rep.query(spec);
+        assertEquals(testOrder.size(),0);
     }
 
     @Test
     public void updateOrders() throws Exception {
-        Orders order = new Orders(11,2,3,"2020-12-12");
-        OrderRepository rep = new OrderRepository();
+        Orders order = new Orders(100,2,1,"2020-12-12");
+        OrderRepository rep = (OrderRepository)context.getBean("orderRepository");
         rep.updateOrders(order);
-        Orders testOrder = new Orders();
-        String sqlQuery = String.format("SELECT * FROM orders WHERE order_id = %s",order.getOrderId());
-        Connection connection;
-        Statement stmt;
-        try {
-            connection = DBConnectionFactory.conFactory();
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(sqlQuery);
-            if(rs.next()){
-                testOrder.setOrderId(rs.getInt("order_id"));
-                testOrder.setUserId(rs.getInt("user_id"));
-                testOrder.setOfferId(rs.getInt("offer_id"));
-                testOrder.setStartDate(rs.getString("start_date"));
-            }
-            rs.close();
-            stmt.close();
-            connection.close();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }
-        assertEquals(order.getOrderId(),testOrder.getOrderId());
-        assertEquals(order.getUserId(),testOrder.getUserId());
-        assertEquals(order.getOfferId(),testOrder.getOfferId());
-        assertEquals(order.getStartDate(),testOrder.getStartDate());
+        String sqlQuery = String.format("WHERE order_id = %s",order.getOrderId());
+        EmptySpecification spec = new EmptySpecification(sqlQuery);
+        List<Orders> testOrder = rep.query(spec);
+        assertEquals(order.getOrderId(),testOrder.get(0).getOrderId());
+        assertEquals(order.getUserId(),testOrder.get(0).getUserId());
+        assertEquals(order.getOfferId(),testOrder.get(0).getOfferId());
+        assertEquals(order.getStartDate(),testOrder.get(0).getStartDate());
     }
 
 }
-*/
