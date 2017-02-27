@@ -24,19 +24,16 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"/beans.xml"})
 @Transactional
 public class UserRepositoryTest {
+    @Autowired
     JdbcTemplate jdbcTemplate;
-    ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 
     @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    UserRepository rep;
 
     @Test
     public void addUser(){
         User user = new User(200,"Test name",false);
-        String sqlQuery = String.format("INSERT INTO users (user_id, name,is_admin) VALUES (%s,\'%s\',%b);",user.getUserId(),user.getName(),user.getIsAdmin());
-        jdbcTemplate.update(sqlQuery);
+        rep.addUser(user);
         String sqlQuery2 = String.format("SELECT * FROM users WHERE user_id = %s",user.getUserId());
         List<User> testUser = this.jdbcTemplate.query(sqlQuery2, new RowMapper<User>(){
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -55,8 +52,7 @@ public class UserRepositoryTest {
     @Test
     public void removeUser() throws Exception {
         User user = new User(11,"Test name",false);
-        String sqlQuery = String.format("DELETE FROM users WHERE user_id = %s;",user.getUserId());
-        jdbcTemplate.update(sqlQuery);
+        rep.removeUser(user);
         String sqlQuery2 = String.format("SELECT * FROM users WHERE user_id = %s",user.getUserId());
         List<User> testUser = this.jdbcTemplate.query(sqlQuery2, new RowMapper<User>(){
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -73,8 +69,7 @@ public class UserRepositoryTest {
     @Test
     public void updateUser() throws Exception {
         User user = new User(11,"Test name1",true);
-        String sqlQuery = String.format("UPDATE users SET is_admin = %b, name = \'%s\' WHERE user_id = %s;",user.getIsAdmin(),user.getName(),user.getUserId());
-        jdbcTemplate.update(sqlQuery);
+        rep.updateUser(user);
         String sqlQuery2 = String.format("SELECT * FROM users WHERE user_id = %s",user.getUserId());
         List<User> testUser = this.jdbcTemplate.query(sqlQuery2, new RowMapper<User>(){
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
