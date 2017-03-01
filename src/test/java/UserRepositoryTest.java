@@ -1,18 +1,13 @@
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import ru.entity.*;
 import org.junit.Test;
 import ru.repository.UserRepository;
-import ru.specifications.EmptySpecification;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,8 +29,8 @@ public class UserRepositoryTest {
     public void addUser(){
         User user = new User(200,"Test name",false);
         rep.addUser(user);
-        String sqlQuery2 = String.format("SELECT * FROM users WHERE user_id = %s",user.getUserId());
-        List<User> testUser = this.jdbcTemplate.query(sqlQuery2, new RowMapper<User>(){
+        String sqlQuery = String.format("SELECT * FROM users WHERE user_id = %s",user.getUserId());
+        List<User> testUser = this.jdbcTemplate.query(sqlQuery, new RowMapper<User>(){
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
                 User nextUser = new User();
                 nextUser.setUserId(rs.getInt("user_id"));
@@ -53,8 +48,8 @@ public class UserRepositoryTest {
     public void removeUser() throws Exception {
         User user = new User(11,"Test name",false);
         rep.removeUser(user);
-        String sqlQuery2 = String.format("SELECT * FROM users WHERE user_id = %s",user.getUserId());
-        List<User> testUser = this.jdbcTemplate.query(sqlQuery2, new RowMapper<User>(){
+        String sqlQuery = String.format("SELECT * FROM users WHERE user_id = %s",user.getUserId());
+        List<User> testUser = this.jdbcTemplate.query(sqlQuery, new RowMapper<User>(){
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
                 User nextUser = new User();
                 nextUser.setUserId(rs.getInt("user_id"));
@@ -70,8 +65,8 @@ public class UserRepositoryTest {
     public void updateUser() throws Exception {
         User user = new User(11,"Test name1",true);
         rep.updateUser(user);
-        String sqlQuery2 = String.format("SELECT * FROM users WHERE user_id = %s",user.getUserId());
-        List<User> testUser = this.jdbcTemplate.query(sqlQuery2, new RowMapper<User>(){
+        String sqlQuery = String.format("SELECT * FROM users WHERE user_id = %s",user.getUserId());
+        List<User> testUser = this.jdbcTemplate.query(sqlQuery, new RowMapper<User>(){
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
                 User nextUser = new User();
                 nextUser.setUserId(rs.getInt("user_id"));
