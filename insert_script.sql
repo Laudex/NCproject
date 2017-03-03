@@ -1,4 +1,4 @@
-﻿INSERT INTO users VALUES(1,'Name1',true);
+﻿INSERT INTO users VALUES(1,'Name1',false);
 INSERT INTO users VALUES(2,'Name2',false);
 INSERT INTO users VALUES(3,'Name3',false);
 INSERT INTO users VALUES(4,'Name4',false);
@@ -7,14 +7,18 @@ INSERT INTO users VALUES(6,'Name6',false);
 INSERT INTO users VALUES(7,'Name7',false);
 INSERT INTO users VALUES(8,'Name8',false);
 INSERT INTO users VALUES(9,'Name9',false);
-INSERT INTO users VALUES(10,'Name10',false);
+INSERT INTO users VALUES(10,'Name10',false); 
+INSERT INTO users VALUES(11,'Admin',true);
 
+select setval('users_user_id_seq',(select max(user_id) from users));
 
 INSERT INTO offer VALUES(1,'Offer 1');
 INSERT INTO offer VALUES(2,'Offer 2');
 INSERT INTO offer VALUES(3,'Offer 3');
 INSERT INTO offer VALUES(4,'Offer 4');
 INSERT INTO offer VALUES(5,'Offer 5');
+
+select setval('offer_offer_id_seq', (select max(offer_id) from offer));
 
 
 
