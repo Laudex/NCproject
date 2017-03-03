@@ -40,6 +40,9 @@ INSERT INTO attr VALUES(2,'traffic');
 INSERT INTO attr VALUES(3,'price');
 INSERT INTO attr VALUES(4,'period');
 
+select setval('attr_attr_id_seq',(select max(attr_id) from attr));
+
+
 INSERT INTO attr_values VALUES (1,1,'mobile');
 INSERT INTO attr_values VALUES (1,2,'500 minutes');
 INSERT INTO attr_values VALUES (1,3,'200 rub');
