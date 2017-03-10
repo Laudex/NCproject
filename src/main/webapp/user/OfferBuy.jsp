@@ -37,6 +37,7 @@
         <tr>
         <td><%=offer.getName()%></td><input type="hidden" name="offerId" value = "<%=offer.getOfferId()%>">
     <td><input type="submit" value="Get it!"></td>
+            <td><button formaction="/offerInfo">Info</button> </td>
     </tr>
 </form>
 

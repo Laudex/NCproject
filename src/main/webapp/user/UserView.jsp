@@ -11,9 +11,15 @@
     session.setAttribute("enterError",null);
 }
 %>
-<h3>Введите имя пользователя:</h3>
+<h3>Log in</h3>
 <form action = "/offerView" method="POST">
+    Login:<br/>
     <input type ="text" name = "name">
+    <br/>
+    Password:
+    <br/>
+    <input type="password" name="password">
+    <br/>
     <input type ="submit" value="Показать">
 </form>
 </body>

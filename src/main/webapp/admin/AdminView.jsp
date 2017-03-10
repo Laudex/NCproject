@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="ru.entity.Offer" %>
-<%@ page import="java.util.Iterator" %><%--
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.Map" %><%--
   Created by IntelliJ IDEA.
   User: ааааааааааеееееееее
   Date: 15.02.2017
@@ -14,24 +15,32 @@
 </head>
 <body>
 <%
-    List<Offer> offerList = (List<Offer>)session.getAttribute("offers");
+    Map<Offer,Boolean> offerList = (Map<Offer,Boolean>)session.getAttribute("offers");
 %>
 List of Offers
 <br>
-<% if (session.getAttribute("deleteError")!=null){
-%><p color ="red"><%=session.getAttribute("deleteError")%></p>
+<% if (request.getAttribute("error")!=null){
+%><p color ="red"><%=request.getAttribute("error")%></p>
 <%
-        session.setAttribute("deleteError",null);
+        request.setAttribute("error",null);
     }
 %>
 <table border="2px" cellpadding="10px">
-    <%for (Iterator<Offer> j = offerList.iterator(); j.hasNext(); ) {
-        Offer userOffer = j.next();
+    <%for (Map.Entry entry : offerList.entrySet()) {
+        Offer userOffer = (Offer)entry.getKey();
     %>
     <form action = "/adminRemove" method="POST">
         <tr>
+            <%  boolean flag = (Boolean)entry.getValue();
+                if (flag == true){%>
             <td><%=userOffer.getName()%></td><input type="hidden" name = "offerId" value="<%=userOffer.getOfferId()%>">
             <td><input type="submit" value="Delete"></td>
+            <td><button formaction="/offerInfo">Info</button></td>
+            <% }else { %>
+            <td><%=userOffer.getName()%> </p></td><input type="hidden" name="offerId" value="<%=userOffer.getOfferId()%>">
+            <td><input type="submit" value="Delete" disabled>(Bought)</td>
+            <td><button formaction="/offerInfo">Info</button></td>
+            <% } %>
         </tr>
     </form>
 

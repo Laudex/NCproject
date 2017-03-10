@@ -24,6 +24,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Scanner;
+
 
 @MultipartConfig
 @WebServlet(name = "AdminAddOfferServlet")
@@ -32,18 +34,7 @@ public class AdminAddOfferServlet extends HttpServlet {
         Part filePart = request.getPart("offer");
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         InputStream fileContent = filePart.getInputStream();
-        //PrintWriter out = response.getWriter();
-        final int bufferSize = 1024;
-        final char[] buffer = new char[bufferSize];
-        final StringBuilder out1 = new StringBuilder();
-        Reader in = new InputStreamReader(fileContent, "UTF-8");
-        for (; ; ) {
-            int rsz = in.read(buffer, 0, buffer.length);
-            if (rsz < 0)
-                break;
-            out1.append(buffer, 0, rsz);
-        }
-        String file = out1.toString();
+        String file = new Scanner(fileContent,"UTF-8").useDelimiter("\\A").next();
         try {
             Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                     .parse(new InputSource(new StringReader(file)));
@@ -73,6 +64,7 @@ public class AdminAddOfferServlet extends HttpServlet {
                 response.sendRedirect("/adminPanel");
             }
         } catch (SAXException | ParserConfigurationException e) {
+            request.setAttribute("error","Error in parse xml file!");
             response.sendRedirect("/adminPanel");
         }
     }

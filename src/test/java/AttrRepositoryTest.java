@@ -31,7 +31,7 @@ public class AttrRepositoryTest {
         Attr attr = new Attr(6,"test");
         rep.addAttr(attr);
         String sqlQuery = String.format("SELECT * FROM attr WHERE attr_id = %s",attr.getAttrId());
-        List<Attr> testAttr = this.jdbcTemplate.query(sqlQuery, new RowMapper<Attr>(){
+        List<Attr> testAttr = jdbcTemplate.query(sqlQuery, new RowMapper<Attr>(){
             public Attr mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Attr nextAttr = new Attr();
                 nextAttr.setAttrId(rs.getInt("attr_id"));
@@ -48,7 +48,7 @@ public class AttrRepositoryTest {
         Attr attr = new Attr(5,"test");
         rep.removeAttr(attr);
         String sqlQuery = String.format("SELECT * FROM attr WHERE attr_id = %s",attr.getAttrId());
-        List<Attr> testAttr = this.jdbcTemplate.query(sqlQuery, new RowMapper<Attr>(){
+        List<Attr> testAttr = jdbcTemplate.query(sqlQuery, new RowMapper<Attr>(){
             public Attr mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Attr nextAttr = new Attr();
                 nextAttr.setAttrId(rs.getInt("attr_id"));
@@ -61,10 +61,10 @@ public class AttrRepositoryTest {
 
     @Test
     public void updateAttr() throws Exception {
-        Attr attr = new Attr(5,"period");
+        Attr attr = new Attr(4,"test");
         rep.updateAttr(attr);
         String sqlQuery = String.format("SELECT * FROM attr WHERE attr_id = %s",attr.getAttrId());
-        List<Attr> testAttr = this.jdbcTemplate.query(sqlQuery, new RowMapper<Attr>(){
+        List<Attr> testAttr = jdbcTemplate.query(sqlQuery, new RowMapper<Attr>(){
             public Attr mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Attr nextAttr = new Attr();
                 nextAttr.setAttrId(rs.getInt("attr_id"));

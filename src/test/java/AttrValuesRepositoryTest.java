@@ -27,10 +27,10 @@ public class AttrValuesRepositoryTest {
 
     @Test
     public void addAttrValues() throws Exception {
-        AttrValues attrValues = new AttrValues(5,4,"test");
+        AttrValues attrValues = new AttrValues(5,5,"test");
         rep.addAttrValues(attrValues);
         String sqlQuery = String.format("SELECT * FROM attr_values WHERE offer_id = %s AND attr_id = %s",attrValues.getOfferId(),attrValues.getAttrId());
-        List<AttrValues> testAttrValues = this.jdbcTemplate.query(sqlQuery, new RowMapper<AttrValues>(){
+        List<AttrValues> testAttrValues = jdbcTemplate.query(sqlQuery, new RowMapper<AttrValues>(){
             public AttrValues mapRow(ResultSet rs, int rowNum) throws SQLException {
                 AttrValues nextAttrValues = new AttrValues();
                 nextAttrValues.setOfferId(rs.getInt("offer_id"));
@@ -46,10 +46,10 @@ public class AttrValuesRepositoryTest {
 
     @Test
     public void removeAttrValues() throws Exception {
-        AttrValues attrValues = new AttrValues(4,4,"30 days");
+        AttrValues attrValues = new AttrValues(100,5,"test");
         rep.removeAttrValues(attrValues);
         String sqlQuery = String.format("SELECT * FROM attr_values WHERE offer_id = %s AND attr_id = %s",attrValues.getOfferId(),attrValues.getAttrId());
-        List<AttrValues> testAttrValues = this.jdbcTemplate.query(sqlQuery, new RowMapper<AttrValues>(){
+        List<AttrValues> testAttrValues = jdbcTemplate.query(sqlQuery, new RowMapper<AttrValues>(){
             public AttrValues mapRow(ResultSet rs, int rowNum) throws SQLException {
                 AttrValues nextAttrValues = new AttrValues();
                 nextAttrValues.setOfferId(rs.getInt("offer_id"));
@@ -63,10 +63,10 @@ public class AttrValuesRepositoryTest {
 
     @Test
     public void updateAttrValues() throws Exception {
-        AttrValues attrValues = new AttrValues(4,4,"test");
+        AttrValues attrValues = new AttrValues(100,5,"testUpdate");
         rep.updateAttrValues(attrValues);
         String sqlQuery = String.format("SELECT * FROM attr_values WHERE offer_id = %s AND attr_id = %s",attrValues.getOfferId(),attrValues.getAttrId());
-        List<AttrValues> testAttrValues = this.jdbcTemplate.query(sqlQuery, new RowMapper<AttrValues>(){
+        List<AttrValues> testAttrValues = jdbcTemplate.query(sqlQuery, new RowMapper<AttrValues>(){
             public AttrValues mapRow(ResultSet rs, int rowNum) throws SQLException {
                 AttrValues nextAttrValues = new AttrValues();
                 nextAttrValues.setOfferId(rs.getInt("offer_id"));

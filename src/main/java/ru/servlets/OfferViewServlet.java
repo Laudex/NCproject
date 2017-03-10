@@ -29,45 +29,53 @@ public class OfferViewServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
+        String password = request.getParameter("password");
         UserSpecificationByName spec = new UserSpecificationByName(name);
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         UserRepository rep = (UserRepository) context.getBean("userRepository");
         try {
             List<User> listUsers = rep.query(spec);
             int id = listUsers.get(0).getUserId();
-            boolean isAdmin = listUsers.get(0).getIsAdmin();
-            if (!isAdmin) {
-                OrderSpecificationByUserId spec2 = new OrderSpecificationByUserId(id);
-                OrderRepository rep2 = (OrderRepository) context.getBean("orderRepository");
-                List<Orders> listOrders = rep2.query(spec2);
-                OfferRepository rep3 = (OfferRepository) context.getBean("offerRepository");
-                List<Offer> listOffers = new ArrayList<Offer>();
-                for (Iterator<Orders> i = listOrders.iterator(); i.hasNext(); ) {
-                    String query = String.format("WHERE offer_id = %s", i.next().getOfferId());
-                    EmptySpecification spec3 = new EmptySpecification(query);
-                    List<Offer> list = rep3.query(spec3);
-                    listOffers.add(list.get(0));
+            String userPass = listUsers.get(0).getPassword();
+            if (userPass.equals(password)) {
+                boolean isAdmin = listUsers.get(0).getIsAdmin();
+                if (!isAdmin) {
+                    OrderSpecificationByUserId spec2 = new OrderSpecificationByUserId(id);
+                    OrderRepository rep2 = (OrderRepository) context.getBean("orderRepository");
+                    List<Orders> listOrders = rep2.query(spec2);
+                    OfferRepository rep3 = (OfferRepository) context.getBean("offerRepository");
+                    List<Offer> listOffers = new ArrayList<Offer>();
+                    for (Iterator<Orders> i = listOrders.iterator(); i.hasNext(); ) {
+                        String query = String.format("WHERE offer_id = %s", i.next().getOfferId());
+                        EmptySpecification spec3 = new EmptySpecification(query);
+                        List<Offer> list = rep3.query(spec3);
+                        listOffers.add(list.get(0));
+                    }
+                    HttpSession session = request.getSession();
+                    //session.setMaxInactiveInterval(15 * 60);
+                    session.setAttribute("userId", id);
+                    session.setAttribute("userName", name);
+                    session.setAttribute("list", listOffers);
+                    session.setAttribute("admin", isAdmin);
+                    request.getRequestDispatcher("/user/OfferView.jsp").include(request, response);
+                    //RequestDispatcher dispatcher = request.getRequestDispatcher("user/OfferView.jsp");
+                    // dispatcher.forward(request,response);
+                } else {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("userId", id);
+                    session.setAttribute("userName", name);
+                    session.setAttribute("admin", isAdmin);
+                    response.sendRedirect("/adminPanel");
+
                 }
-                HttpSession session = request.getSession();
-                //session.setMaxInactiveInterval(15 * 60);
-                session.setAttribute("userId", id);
-                session.setAttribute("userName", name);
-                session.setAttribute("list", listOffers);
-                session.setAttribute("admin", isAdmin);
-                request.getRequestDispatcher("/user/OfferView.jsp").include(request, response);
-                //RequestDispatcher dispatcher = request.getRequestDispatcher("user/OfferView.jsp");
-                // dispatcher.forward(request,response);
             } else {
                 HttpSession session = request.getSession();
-                session.setAttribute("userId", id);
-                session.setAttribute("userName", name);
-                session.setAttribute("admin", isAdmin);
-                response.sendRedirect("/adminPanel");
-
+                session.setAttribute("enterError","Incorrect login or password!");
+                response.sendRedirect("/userView");
             }
         } catch (IndexOutOfBoundsException e) {
             HttpSession session = request.getSession();
-            session.setAttribute("enterError", "This name was not found! Try again!");
+            session.setAttribute("enterError", "Incorrect login or password!");
             response.sendRedirect("/userView");
             //RequestDispatcher dispatcher = request.getRequestDispatcher("/user/UserView.jsp");
             //dispatcher.forward(request, response);

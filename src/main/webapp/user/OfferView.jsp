@@ -25,6 +25,7 @@ Offer List of <%=session.getAttribute("userName")%>:
         <tr>
             <td><%=userOffer.getName()%> (Bought)</td><input type="hidden" name = "offerId" value="<%=userOffer.getOfferId()%>">
             <td><input type="submit" value="Remove it!"></td>
+            <td><button formaction="/offerInfo">Info</button></td>
         </tr>
     </form>
 

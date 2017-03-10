@@ -1,5 +1,6 @@
 package ru.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import ru.entity.AttrValues;
@@ -12,6 +13,7 @@ import java.util.List;
 
 
 public class AttrValuesRepository implements IAttrValuesRepository {
+
 
     private JdbcTemplate jdbcTemplate;
 
@@ -36,7 +38,7 @@ public class AttrValuesRepository implements IAttrValuesRepository {
 
     public List query(Specification specification) {
         String sql = "SELECT * FROM attr_values " + specification.toSqlClauses();
-        List<AttrValues> specificAttrsValues = this.jdbcTemplate.query(sql, new RowMapper<AttrValues>(){
+        List<AttrValues> specificAttrsValues = jdbcTemplate.query(sql, new RowMapper<AttrValues>(){
             public AttrValues mapRow(ResultSet rs, int rowNum) throws SQLException {
                 AttrValues nextAttrValues = new AttrValues();
                 nextAttrValues.setOfferId(rs.getInt("offer_id"));

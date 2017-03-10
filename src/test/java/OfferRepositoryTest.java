@@ -29,7 +29,7 @@ public class OfferRepositoryTest {
         Offer offer = new Offer(200,"Offer 6");
         rep.addOffer(offer);
         String sqlQuery = String.format("SELECT * FROM offer WHERE offer_id = %s",offer.getOfferId());
-        List<Offer> testOffer = this.jdbcTemplate.query(sqlQuery, new RowMapper<Offer>() {
+        List<Offer> testOffer = jdbcTemplate.query(sqlQuery, new RowMapper<Offer>() {
             public Offer mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Offer nextOffer = new Offer();
                 nextOffer.setOffer_id(rs.getInt("offer_id"));
@@ -43,10 +43,10 @@ public class OfferRepositoryTest {
 
     @Test
     public void removeOffer() throws Exception {
-        Offer offer = new Offer(6,"Offer 6");
+        Offer offer = new Offer(100,"Test offer");
         rep.removeOffer(offer);
         String sqlQuery = String.format("SELECT * FROM offer WHERE offer_id = %s",offer.getOfferId());
-        List<Offer> testOffer = this.jdbcTemplate.query(sqlQuery, new RowMapper<Offer>() {
+        List<Offer> testOffer = jdbcTemplate.query(sqlQuery, new RowMapper<Offer>() {
             public Offer mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Offer nextOffer = new Offer();
                 nextOffer.setOffer_id(rs.getInt("offer_id"));
@@ -59,10 +59,10 @@ public class OfferRepositoryTest {
 
     @Test
     public void updateOffer() throws Exception {
-        Offer offer = new Offer(5,"test");
+        Offer offer = new Offer(100,"test");
         rep.updateOffer(offer);
         String sqlQuery = String.format("SELECT * FROM offer WHERE offer_id = %s",offer.getOfferId());
-        List<Offer> testOffer = this.jdbcTemplate.query(sqlQuery, new RowMapper<Offer>() {
+        List<Offer> testOffer = jdbcTemplate.query(sqlQuery, new RowMapper<Offer>() {
             public Offer mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Offer nextOffer = new Offer();
                 nextOffer.setOffer_id(rs.getInt("offer_id"));

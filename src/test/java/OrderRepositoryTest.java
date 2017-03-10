@@ -28,10 +28,10 @@ public class OrderRepositoryTest {
 
     @Test
     public void addOrders() throws Exception {
-        Orders order = new Orders(20,1,2,"2013-12-12");
+        Orders order = new Orders(11,1,100,"2013-12-12");
         rep.addOrders(order);
         String sqlQuery = String.format("SELECT * FROM orders WHERE order_id = %s",order.getOrderId());
-        List<Orders> testOrder = this.jdbcTemplate.query(sqlQuery, new RowMapper<Orders>(){
+        List<Orders> testOrder = jdbcTemplate.query(sqlQuery, new RowMapper<Orders>(){
             public Orders mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Orders nextOrder = new Orders();
                 nextOrder.setOrderId(rs.getInt("order_id"));
@@ -49,10 +49,10 @@ public class OrderRepositoryTest {
 
     @Test
     public void removeOrders() throws Exception {
-        Orders order = new Orders(10,1,2,"2013-12-12");
+        Orders order = new Orders(10,1,100,"2013-12-12");
         rep.removeOrders(order);
         String sqlQuery = String.format("SELECT * FROM orders WHERE order_id = %s",order.getOrderId());
-        List<Orders> testOrder = this.jdbcTemplate.query(sqlQuery, new RowMapper<Orders>(){
+        List<Orders> testOrder = jdbcTemplate.query(sqlQuery, new RowMapper<Orders>(){
             public Orders mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Orders nextOrder = new Orders();
                 nextOrder.setOrderId(rs.getInt("order_id"));
@@ -67,10 +67,10 @@ public class OrderRepositoryTest {
 
     @Test
     public void updateOrders() throws Exception {
-        Orders order = new Orders(10,2,1,"2020-12-12");
+        Orders order = new Orders(10,2,100,"2020-12-12");
         rep.updateOrders(order);
         String sqlQuery = String.format("SELECT * FROM orders WHERE order_id = %s",order.getOrderId());
-        List<Orders> testOrder = this.jdbcTemplate.query(sqlQuery, new RowMapper<Orders>(){
+        List<Orders> testOrder = jdbcTemplate.query(sqlQuery, new RowMapper<Orders>(){
             public Orders mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Orders nextOrder = new Orders();
                 nextOrder.setOrderId(rs.getInt("order_id"));

@@ -41,7 +41,7 @@ public class OrderRepository implements IOrderRepository {
 
     public List query(Specification specification) {
         String sql = "SELECT * FROM orders " + specification.toSqlClauses();
-        List<Orders> specificOrders = this.jdbcTemplate.query(sql, new RowMapper<Orders>(){
+        List<Orders> specificOrders = jdbcTemplate.query(sql, new RowMapper<Orders>(){
             public Orders mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Orders nextOrder = new Orders();
                 nextOrder.setOrderId(rs.getInt("order_id"));

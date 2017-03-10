@@ -4,14 +4,16 @@ package ru.entity;
 public class User {
     private int userId;
     private String name;
+    private String password;
     private boolean isAdmin;
 
     public User(){
     }
 
-    public User(int userId, String name, boolean isAdmin) {
+    public User(int userId, String name, String password, boolean isAdmin) {
         this.userId = userId;
         this.name = name;
+        this.password = password;
         this.isAdmin = isAdmin;
     }
 
@@ -27,6 +29,10 @@ public class User {
         this.name = name;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void setUserId(int userId) {
         this.userId = userId;
     }
@@ -37,6 +43,10 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public boolean getIsAdmin() {

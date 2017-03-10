@@ -26,23 +26,15 @@ public class AdminRemoveServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session.getAttribute("userId") != null){
             int offerId = Integer.parseInt(request.getParameter("offerId"));
-            OrderSpecificationByOfferId spec = new OrderSpecificationByOfferId(offerId);
             ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-            OrderRepository rep = (OrderRepository)context.getBean("orderRepository");
-            List<Orders> orders = rep.query(spec);
-            if (orders.size() != 0){
-                session.setAttribute("deleteError", "You can not delete this offer, because some user purchased this!");
-                request.getRequestDispatcher("/admin/AdminView.jsp").include(request,response);
-            } else {
-                AttrValues attrValues = new AttrValues(offerId);
-                AttrValuesRepository rep2 = (AttrValuesRepository) context.getBean("attrValRepository");
-                rep2.removeAttrValues(attrValues);
-                Offer deleteOffer = new Offer();
-                deleteOffer.setOffer_id(offerId);
-                OfferRepository rep3 = (OfferRepository)context.getBean("offerRepository");
-                rep3.removeOffer(deleteOffer);
-                response.sendRedirect("/adminPanel");
-            }
+            AttrValues attrValues = new AttrValues(offerId);
+            AttrValuesRepository rep2 = (AttrValuesRepository) context.getBean("attrValRepository");
+            rep2.removeAttrValues(attrValues);
+            Offer deleteOffer = new Offer();
+            deleteOffer.setOffer_id(offerId);
+            OfferRepository rep3 = (OfferRepository) context.getBean("offerRepository");
+            rep3.removeOffer(deleteOffer);
+            response.sendRedirect("/adminPanel");
         } else {
             response.sendRedirect("/userView");
         }

@@ -27,14 +27,15 @@ public class UserRepositoryTest {
 
     @Test
     public void addUser(){
-        User user = new User(200,"Test name",false);
+        User user = new User(200,"Test name","Test password",false);
         rep.addUser(user);
         String sqlQuery = String.format("SELECT * FROM users WHERE user_id = %s",user.getUserId());
-        List<User> testUser = this.jdbcTemplate.query(sqlQuery, new RowMapper<User>(){
+        List<User> testUser = jdbcTemplate.query(sqlQuery, new RowMapper<User>(){
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
                 User nextUser = new User();
                 nextUser.setUserId(rs.getInt("user_id"));
                 nextUser.setName(rs.getString("name"));
+                nextUser.setPassword(rs.getString("password"));
                 nextUser.setAdmin(rs.getBoolean("is_admin"));
                 return nextUser;
             }
@@ -46,14 +47,15 @@ public class UserRepositoryTest {
 
     @Test
     public void removeUser() throws Exception {
-        User user = new User(11,"Test name",false);
+        User user = new User(11,"Test name","Test password",false);
         rep.removeUser(user);
         String sqlQuery = String.format("SELECT * FROM users WHERE user_id = %s",user.getUserId());
-        List<User> testUser = this.jdbcTemplate.query(sqlQuery, new RowMapper<User>(){
+        List<User> testUser = jdbcTemplate.query(sqlQuery, new RowMapper<User>(){
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
                 User nextUser = new User();
                 nextUser.setUserId(rs.getInt("user_id"));
                 nextUser.setName(rs.getString("name"));
+                nextUser.setPassword(rs.getString("password"));
                 nextUser.setAdmin(rs.getBoolean("is_admin"));
                 return nextUser;
             }
@@ -63,14 +65,15 @@ public class UserRepositoryTest {
     
     @Test
     public void updateUser() throws Exception {
-        User user = new User(11,"Test name1",true);
+        User user = new User(11,"Test name1","Test password",true);
         rep.updateUser(user);
         String sqlQuery = String.format("SELECT * FROM users WHERE user_id = %s",user.getUserId());
-        List<User> testUser = this.jdbcTemplate.query(sqlQuery, new RowMapper<User>(){
+        List<User> testUser = jdbcTemplate.query(sqlQuery, new RowMapper<User>(){
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
                 User nextUser = new User();
                 nextUser.setUserId(rs.getInt("user_id"));
                 nextUser.setName(rs.getString("name"));
+                nextUser.setPassword(rs.getString("password"));
                 nextUser.setAdmin(rs.getBoolean("is_admin"));
                 return nextUser;
             }

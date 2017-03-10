@@ -1,7 +1,9 @@
 package ru.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.test.context.ContextConfiguration;
 import ru.entity.Attr;
 import ru.interfaces.repository.IAttrRepository;
 import ru.interfaces.specification.Specification;
@@ -13,11 +15,13 @@ import java.util.List;
 
 public class AttrRepository implements IAttrRepository {
 
+
     private JdbcTemplate jdbcTemplate;
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
+
 
 
     public void addAttr(Attr attr) {
@@ -40,7 +44,7 @@ public class AttrRepository implements IAttrRepository {
 
     public List query(Specification specification) {
         String sql = "SELECT * FROM attr " + specification.toSqlClauses();
-        List<Attr> specificAttrs = this.jdbcTemplate.query(sql, new RowMapper<Attr>(){
+        List<Attr> specificAttrs = jdbcTemplate.query(sql, new RowMapper<Attr>(){
             public Attr mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Attr nextAttr = new Attr();
                 nextAttr.setAttrId(rs.getInt("attr_id"));
