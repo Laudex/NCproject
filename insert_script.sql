@@ -1,4 +1,4 @@
-﻿INSERT INTO users VALUES(1,'Name1','123',false);
+INSERT INTO users VALUES(1,'Name1','123',false);
 INSERT INTO users VALUES(2,'Name2','567',false);
 INSERT INTO users VALUES(3,'Name3','123',false);
 INSERT INTO users VALUES(4,'Name4','567',false);
@@ -7,7 +7,7 @@ INSERT INTO users VALUES(6,'Name6','567',false);
 INSERT INTO users VALUES(7,'Name7','123',false);
 INSERT INTO users VALUES(8,'Name8','567',false);
 INSERT INTO users VALUES(9,'Name9','123',false);
-INSERT INTO users VALUES(10,'Name10','567',false); 
+INSERT INTO users VALUES(10,'Name10','567',false);
 INSERT INTO users VALUES(11,'Admin','admin',true);
 
 select setval('users_user_id_seq',(select max(user_id) from users));
