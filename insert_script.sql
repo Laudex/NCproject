@@ -18,6 +18,7 @@ INSERT INTO offer VALUES(3,'Offer 3');
 INSERT INTO offer VALUES(4,'Offer 4');
 INSERT INTO offer VALUES(5,'Offer 5');
 insert into offer values(100, 'Test offer')
+insert into offer values(101,'test')
 
 select setval('offer_offer_id_seq', (select max(offer_id) from offer));
 
@@ -41,6 +42,7 @@ INSERT INTO attr VALUES(2,'traffic');
 INSERT INTO attr VALUES(3,'price');
 INSERT INTO attr VALUES(4,'period');
 insert into attr values(5,'test')
+insert into attr values(6,'test')
 
 select setval('attr_attr_id_seq',(select max(attr_id) from attr));
 
