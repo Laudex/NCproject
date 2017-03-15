@@ -14,15 +14,18 @@
     <title>Admin Panel</title>
 </head>
 <body>
+<form action="/logOut" method="POST">
+    <input type="submit" value="Log out">
+</form>
 <%
     Map<Offer,Boolean> offerList = (Map<Offer,Boolean>)session.getAttribute("offers");
 %>
 List of Offers
 <br>
-<% if (request.getAttribute("error")!=null){
-%><p color ="red"><%=request.getAttribute("error")%></p>
+<% if (session.getAttribute("error")!=null){
+%><p><%=session.getAttribute("error")%></p>
 <%
-        request.setAttribute("error",null);
+        session.setAttribute("error",null);
     }
 %>
 <table border="2px" cellpadding="10px">

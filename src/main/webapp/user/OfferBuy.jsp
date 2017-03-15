@@ -12,6 +12,9 @@
     <title>Buy Offers</title>
 </head>
 <body>
+<form action="/logOut" method="POST">
+    <input type="submit" value="Log out">
+</form>
 <%
     ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
     EmptySpecification spec = new EmptySpecification();

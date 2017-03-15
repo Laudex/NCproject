@@ -43,7 +43,7 @@ public class OfferRepositoryTest {
 
     @Test
     public void removeOffer() throws Exception {
-        Offer offer = new Offer(100,"Test offer");
+        Offer offer = new Offer(101,"Test offer");
         rep.removeOffer(offer);
         String sqlQuery = String.format("SELECT * FROM offer WHERE offer_id = %s",offer.getOfferId());
         List<Offer> testOffer = jdbcTemplate.query(sqlQuery, new RowMapper<Offer>() {

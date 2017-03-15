@@ -43,6 +43,10 @@
         <servlet-name>offerInfoServlet</servlet-name>
         <servlet-class>ru.servlets.OfferInfoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>logOutServlet</servlet-name>
+        <servlet-class>ru.servlets.LogOutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>mainServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -84,6 +88,10 @@
     <servlet-mapping>
         <servlet-name>offerInfoServlet</servlet-name>
         <url-pattern>/offerInfo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logOutServlet</servlet-name>
+        <url-pattern>/logOut</url-pattern>
     </servlet-mapping>
 
 

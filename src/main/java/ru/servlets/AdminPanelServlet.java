@@ -26,30 +26,34 @@ public class AdminPanelServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        boolean isAdmin = (Boolean) session.getAttribute("admin");
-        if (!isAdmin){
-            response.sendRedirect("/offerView");
-        } else {
-            EmptySpecification spec = new EmptySpecification();
-            ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-            OfferRepository rep = (OfferRepository) context.getBean("offerRepository");
-            List<Offer> offerList = rep.query(spec);
-            Map<Offer,Boolean> offerMap = new LinkedHashMap<>();
-            Iterator<Offer> iter = offerList.iterator();
-            while(iter.hasNext()){
-                Offer nextOffer = iter.next();
-                int offerId = nextOffer.getOfferId();
-                OrderSpecificationByOfferId spec2 = new OrderSpecificationByOfferId(offerId);
-                OrderRepository rep2 = (OrderRepository)context.getBean("orderRepository");
-                List<Orders> orders = rep2.query(spec2);
-                if (orders.size() != 0){
-                    offerMap.put(nextOffer,false);
-                } else {
-                    offerMap.put(nextOffer,true);
+        if (session.getAttribute("admin") != null) {
+            boolean isAdmin = (Boolean) session.getAttribute("admin");
+            if (!isAdmin) {
+                response.sendRedirect("/offerView");
+            } else {
+                EmptySpecification spec = new EmptySpecification();
+                ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+                OfferRepository rep = (OfferRepository) context.getBean("offerRepository");
+                List<Offer> offerList = rep.query(spec);
+                Map<Offer, Boolean> offerMap = new LinkedHashMap<>();
+                Iterator<Offer> iter = offerList.iterator();
+                while (iter.hasNext()) {
+                    Offer nextOffer = iter.next();
+                    int offerId = nextOffer.getOfferId();
+                    OrderSpecificationByOfferId spec2 = new OrderSpecificationByOfferId(offerId);
+                    OrderRepository rep2 = (OrderRepository) context.getBean("orderRepository");
+                    List<Orders> orders = rep2.query(spec2);
+                    if (orders.size() != 0) {
+                        offerMap.put(nextOffer, false);
+                    } else {
+                        offerMap.put(nextOffer, true);
+                    }
                 }
+                session.setAttribute("offers", offerMap);
+                request.getRequestDispatcher("/admin/AdminView.jsp").include(request, response);
             }
-            session.setAttribute("offers",offerMap);
-            request.getRequestDispatcher("/admin/AdminView.jsp").include(request,response);
+        } else {
+            response.sendRedirect("/userView");
         }
     }
 }

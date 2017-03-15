@@ -11,6 +11,9 @@
     <title>Offer Info</title>
 </head>
 <body>
+<form action="/logOut" method="POST">
+    <input type="submit" value="Log out">
+</form>
 <%
     String offerName = (String) session.getAttribute("offerName");
     List<String> attrNames = (List<String>) session.getAttribute("attrNames");

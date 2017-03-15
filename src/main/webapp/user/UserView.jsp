@@ -6,7 +6,7 @@
 </head>
 <body>
 <% if (session.getAttribute("enterError")!=null){
-    %><p color ="red"><%=session.getAttribute("enterError")%></p>
+    %><p><%=session.getAttribute("enterError")%></p>
 <%
     session.setAttribute("enterError",null);
 }

@@ -28,7 +28,7 @@ public class AttrRepositoryTest {
 
     @Test
     public void addAttr() throws Exception {
-        Attr attr = new Attr(6,"test");
+        Attr attr = new Attr(7,"test");
         rep.addAttr(attr);
         String sqlQuery = String.format("SELECT * FROM attr WHERE attr_id = %s",attr.getAttrId());
         List<Attr> testAttr = jdbcTemplate.query(sqlQuery, new RowMapper<Attr>(){
@@ -45,7 +45,7 @@ public class AttrRepositoryTest {
 
     @Test
     public void removeAttr() throws Exception {
-        Attr attr = new Attr(5,"test");
+        Attr attr = new Attr(6,"test");
         rep.removeAttr(attr);
         String sqlQuery = String.format("SELECT * FROM attr WHERE attr_id = %s",attr.getAttrId());
         List<Attr> testAttr = jdbcTemplate.query(sqlQuery, new RowMapper<Attr>(){

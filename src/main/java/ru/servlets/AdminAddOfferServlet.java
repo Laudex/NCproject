@@ -24,6 +24,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 
@@ -34,39 +35,47 @@ public class AdminAddOfferServlet extends HttpServlet {
         Part filePart = request.getPart("offer");
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         InputStream fileContent = filePart.getInputStream();
-        String file = new Scanner(fileContent,"UTF-8").useDelimiter("\\A").next();
         try {
-            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                    .parse(new InputSource(new StringReader(file)));
-            Element root = doc.getDocumentElement();
-            NodeList offers = doc.getElementsByTagName("offer");
-            for (int i = 0; i < offers.getLength(); i++){
-                Node offer = offers.item(i);
-                Element eOffer = (Element) offer;
-                String offerName = eOffer.getAttribute("name");
-                Offer newOffer = new Offer(offerName);
-                ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-                OfferRepository rep = (OfferRepository) context.getBean("offerRepository");
-                rep.addOffer(newOffer);
-                OfferSpecificationByName spec = new OfferSpecificationByName(offerName);
-                List<Offer> offerList= rep.query(spec);
-                int offerId = offerList.get(0).getOfferId();
-                NodeList attrs = eOffer.getElementsByTagName("attr");
-                for (int j = 0; j < attrs.getLength(); j++){
-                    Node attr = attrs.item(j);
-                    Element eAttr = (Element) attr;
-                    int attrId = Integer.parseInt(eAttr.getAttribute("id"));
-                    String attrValue = eAttr.getTextContent();
-                    AttrValuesRepository rep2 = (AttrValuesRepository)context.getBean("attrValRepository");
-                    AttrValues attrValues = new AttrValues(offerId,attrId,attrValue);
-                    rep2.addAttrValues(attrValues);
+            String file = new Scanner(fileContent, "UTF-8").useDelimiter("\\A").next();
+            try {
+                Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                        .parse(new InputSource(new StringReader(file)));
+                Element root = doc.getDocumentElement();
+                NodeList offers = doc.getElementsByTagName("offer");
+                for (int i = 0; i < offers.getLength(); i++) {
+                    Node offer = offers.item(i);
+                    Element eOffer = (Element) offer;
+                    String offerName = eOffer.getAttribute("name");
+                    Offer newOffer = new Offer(offerName);
+                    ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+                    OfferRepository rep = (OfferRepository) context.getBean("offerRepository");
+                    rep.addOffer(newOffer);
+                    OfferSpecificationByName spec = new OfferSpecificationByName(offerName);
+                    List<Offer> offerList = rep.query(spec);
+                    int offerId = offerList.get(0).getOfferId();
+                    NodeList attrs = eOffer.getElementsByTagName("attr");
+                    for (int j = 0; j < attrs.getLength(); j++) {
+                        Node attr = attrs.item(j);
+                        Element eAttr = (Element) attr;
+                        int attrId = Integer.parseInt(eAttr.getAttribute("id"));
+                        String attrValue = eAttr.getTextContent();
+                        AttrValuesRepository rep2 = (AttrValuesRepository) context.getBean("attrValRepository");
+                        AttrValues attrValues = new AttrValues(offerId, attrId, attrValue);
+                        rep2.addAttrValues(attrValues);
+                    }
+                    response.sendRedirect("/adminPanel");
                 }
+            } catch (SAXException | ParserConfigurationException e) {
+                HttpSession session = request.getSession();
+                session.setAttribute("error", "Error in parse xml file!");
                 response.sendRedirect("/adminPanel");
             }
-        } catch (SAXException | ParserConfigurationException e) {
-            request.setAttribute("error","Error in parse xml file!");
-            response.sendRedirect("/adminPanel");
+        } catch (NoSuchElementException e) {
+            HttpSession session = request.getSession();
+            session.setAttribute("error", "File was not upload!");
+            response.sendRedirect("/addOffer");
         }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

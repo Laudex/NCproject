@@ -11,6 +11,9 @@
     <title>Offers</title>
 </head>
 <body>
+<form action="/logOut" method="POST">
+    <input type="submit" value="Log out">
+</form>
 <%
     List<Offer> offerList = (List<Offer>) session.getAttribute("list");
 %>
