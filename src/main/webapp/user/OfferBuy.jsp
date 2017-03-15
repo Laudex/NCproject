@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%@ page import ="ru.entity.Offer"%>
+<%@ page import="ru.entity.Offer" %>
 <%@ page import="ru.specifications.EmptySpecification" %>
 <%@ page import="ru.repository.OfferRepository" %>
 <%@ page import="java.util.List" %>
@@ -8,13 +8,11 @@
 <%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext" %>
 <html>
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <meta charset="utf-8">
     <title>Buy Offers</title>
 </head>
 <body>
-<form action="/logOut" method="POST">
-    <input type="submit" value="Log out">
-</form>
 <%
     ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
     EmptySpecification spec = new EmptySpecification();
@@ -22,31 +20,57 @@
     List<Offer> list = rep.query(spec);
     List<Offer> offerList = (List<Offer>) session.getAttribute("list");
 %>
+<div class="row">
+    <div class="col-sm-6">
+        <nav class="navbar navbar-default">
+            <p class="navbar-text">List of available offers:</p>
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logOut"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <table class="table table-striped">
 
-<table border="2px" cellpadding="10px">
+            <%
+                for (Iterator<Offer> i = list.iterator(); i.hasNext(); ) {
+                    Offer offer = i.next();
+                    int k = 0;
+                    for (Iterator<Offer> j = offerList.iterator(); j.hasNext(); ) {
+                        Offer userOffer = j.next();
+                        if (offer.getOfferId() == userOffer.getOfferId()) {
+                            k++;
+                        }
+                    }
+                    if (k == 0) {
 
-    <%for (Iterator<Offer> i = list.iterator(); i.hasNext(); ){
-        Offer offer = i.next();
-        int k = 0;
-    for (Iterator<Offer> j = offerList.iterator(); j.hasNext(); ) {
-        Offer userOffer = j.next();
-        if (offer.getOfferId() == userOffer.getOfferId()) {
-            k++;
-        }
-        }
-        if(k == 0) {
+            %>
+            <form action="/offerGet" method="POST">
+                <tr>
+                    <td><h4><%=offer.getName()%></h4>
+                    </td>
+                    <input type="hidden" name="offerId" value="<%=offer.getOfferId()%>">
+                    <div class="btn-group">
+                        <td align="right"><input  class="btn btn-success" type="submit" value="Get it!">
+                            <button class="btn btn-info" formaction="/offerInfo">Info</button>
+                        </td>
+                    </div>
+                </tr>
+            </form>
 
-        %><form action = "/offerGet" method="POST">
-        <tr>
-        <td><%=offer.getName()%></td><input type="hidden" name="offerId" value = "<%=offer.getOfferId()%>">
-    <td><input type="submit" value="Get it!"></td>
-            <td><button formaction="/offerInfo">Info</button> </td>
-    </tr>
+            <%
+                    }
+                }
+            %>
+        </table>
+    </div>
+</div>
+<form action="/offerView" method="GET">
+    <button class="btn btn-primary">Back</button>
 </form>
-
-    <%}
-    }
-    %>
-</table>
 </body>
 </html>
