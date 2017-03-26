@@ -26,7 +26,7 @@
     </jsp:attribute>
 </t:logout>
 
-<44iv class="row">
+<div class="row">
     <div class="col-sm-6">
         <table class="table table-striped">
             <form action="/addOfferForm" method="POST">
@@ -56,7 +56,7 @@
             </form>
         </table>
     </div>
-</44iv>
+</div>
 <form action="/adminPanel" method="GET">
     <button class="btn btn-primary">Back</button>
 </form>
