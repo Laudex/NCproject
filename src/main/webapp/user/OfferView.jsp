@@ -2,10 +2,7 @@
 <%@page import="java.util.List" %>
 <%@ page import="ru.entity.Offer" %>
 <%@ page import="java.util.Iterator" %>
-<%@ page import="ru.specifications.EmptySpecification" %>
-<%@ page import="ru.repository.OfferRepository" %>
-<%@ page import="org.springframework.context.ApplicationContext" %>
-<%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -14,19 +11,15 @@
 <body>
 <%
     List<Offer> offerList = (List<Offer>) session.getAttribute("list");
+    String titleText = "Offer List of" + session.getAttribute("userName") + ":";
 %>
-<div class="row">
-    <div class="col-sm-6">
-        <nav class="navbar navbar-default">
-            <p class="navbar-text">Offer List of <%=session.getAttribute("userName")%>:</p>
-            <div class="container-fluid">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/logOut"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-</div>
+
+<t:logout>
+    <jsp:attribute name =  "title">
+        Offer List of <%=session.getAttribute("userName")%>:
+    </jsp:attribute>
+</t:logout>
+
 <div class="row">
     <div class="col-sm-6">
         <table class="table table-hover">

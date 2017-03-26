@@ -49,21 +49,31 @@ public class AdminAddOfferServlet extends HttpServlet {
                     Offer newOffer = new Offer(offerName);
                     ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
                     OfferRepository rep = (OfferRepository) context.getBean("offerRepository");
-                    rep.addOffer(newOffer);
                     OfferSpecificationByName spec = new OfferSpecificationByName(offerName);
-                    List<Offer> offerList = rep.query(spec);
-                    int offerId = offerList.get(0).getOfferId();
-                    NodeList attrs = eOffer.getElementsByTagName("attr");
-                    for (int j = 0; j < attrs.getLength(); j++) {
-                        Node attr = attrs.item(j);
-                        Element eAttr = (Element) attr;
-                        int attrId = Integer.parseInt(eAttr.getAttribute("id"));
-                        String attrValue = eAttr.getTextContent();
-                        AttrValuesRepository rep2 = (AttrValuesRepository) context.getBean("attrValRepository");
-                        AttrValues attrValues = new AttrValues(offerId, attrId, attrValue);
-                        rep2.addAttrValues(attrValues);
+                    try {
+                        List<Offer> offerList = rep.query(spec);
+                        int offerId = offerList.get(0).getOfferId();
+                        HttpSession session = request.getSession();
+                        session.setAttribute("error", "This offer is already exist!");
+                        response.sendRedirect("/addOffer");
+                    } catch (IndexOutOfBoundsException e ) {
+                        rep.addOffer(newOffer);
+                        List<Offer> offerList = rep.query(spec);
+                        int offerId = offerList.get(0).getOfferId();
+                        NodeList attrs = eOffer.getElementsByTagName("attr");
+                        for (int j = 0; j < attrs.getLength(); j++) {
+                            Node attr = attrs.item(j);
+                            Element eAttr = (Element) attr;
+                            int attrId = Integer.parseInt(eAttr.getAttribute("id"));
+                            String attrValue = eAttr.getTextContent();
+                            AttrValuesRepository rep2 = (AttrValuesRepository) context.getBean("attrValRepository");
+                            AttrValues attrValues = new AttrValues(offerId, attrId, attrValue);
+                            rep2.addAttrValues(attrValues);
+                        }
+                        HttpSession session = request.getSession();
+                        session.setAttribute("success", "New Offer was added successfully!");
+                        response.sendRedirect("/adminPanel");
                     }
-                    response.sendRedirect("/adminPanel");
                 }
             } catch (SAXException | ParserConfigurationException e) {
                 HttpSession session = request.getSession();
@@ -72,7 +82,7 @@ public class AdminAddOfferServlet extends HttpServlet {
             }
         } catch (NoSuchElementException e) {
             HttpSession session = request.getSession();
-            session.setAttribute("error", "File was not upload!");
+            session.setAttribute("error", "File was not uploaded!");
             response.sendRedirect("/addOffer");
         }
 

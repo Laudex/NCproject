@@ -6,6 +6,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -20,18 +21,11 @@
     List<Offer> list = rep.query(spec);
     List<Offer> offerList = (List<Offer>) session.getAttribute("list");
 %>
-<div class="row">
-    <div class="col-sm-6">
-        <nav class="navbar navbar-default">
-            <p class="navbar-text">List of available offers:</p>
-            <div class="container-fluid">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/logOut"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-</div>
+<t:logout>
+    <jsp:attribute name =  "title">
+        List of available offers:
+    </jsp:attribute>
+</t:logout>
 <div class="row">
     <div class="col-sm-6">
         <table class="table table-striped">

@@ -1,6 +1,6 @@
 package ru.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import ru.entity.AttrValues;
@@ -21,19 +21,16 @@ public class AttrValuesRepository implements IAttrValuesRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
     public void addAttrValues(AttrValues attrValues) {
-        String sqlQuery = String.format("INSERT INTO attr_values (offer_id, attr_id, value) VALUES (%s,%s,\'%s\');", attrValues.getOfferId(),attrValues.getAttrId(),attrValues.getValue());
-        jdbcTemplate.update(sqlQuery);
+        jdbcTemplate.update("INSERT INTO attr_values (offer_id, attr_id, value) VALUES (?,?,?);", attrValues.getOfferId(),attrValues.getAttrId(),attrValues.getValue());
     }
 
 
     public void removeAttrValues(AttrValues attrValues) {
-        String sqlQuery = String.format("DELETE FROM attr_values WHERE offer_id = %s;",attrValues.getOfferId());
-        jdbcTemplate.update(sqlQuery);
+        jdbcTemplate.update("DELETE FROM attr_values WHERE offer_id = ? AND attr_id = ?;",attrValues.getOfferId(), attrValues.getAttrId());
     }
 
     public void updateAttrValues(AttrValues attrValues) {
-        String sqlQuery = String.format("UPDATE attr_values SET value = \'%s\' WHERE offer_id = %s AND attr_id = %s;",attrValues.getValue(),attrValues.getOfferId(),attrValues.getAttrId());
-        jdbcTemplate.update(sqlQuery);
+        jdbcTemplate.update("UPDATE attr_values SET value = ? WHERE offer_id = ? AND attr_id = ?;",attrValues.getValue(),attrValues.getOfferId(),attrValues.getAttrId());
     }
 
     public List query(Specification specification) {

@@ -1,9 +1,7 @@
 package ru.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.test.context.ContextConfiguration;
 import ru.entity.Attr;
 import ru.interfaces.repository.IAttrRepository;
 import ru.interfaces.specification.Specification;
@@ -25,20 +23,17 @@ public class AttrRepository implements IAttrRepository {
 
 
     public void addAttr(Attr attr) {
-        String sqlQuery = String.format("INSERT INTO attr (attr_id, name) VALUES (%s,\'%s\');", attr.getAttrId(),attr.getName());
-        jdbcTemplate.update(sqlQuery);
+        jdbcTemplate.update("INSERT INTO attr (attr_id, name) VALUES (?,?);", attr.getAttrId(),attr.getName());
     }
 
 
     public void removeAttr(Attr attr) {
-        String sqlQuery = String.format("DELETE FROM attr WHERE attr_id = %s;",attr.getAttrId());
-        jdbcTemplate.update(sqlQuery);
+        jdbcTemplate.update("DELETE FROM attr WHERE attr_id = ?;",attr.getAttrId());
     }
 
 
     public void updateAttr(Attr attr) {
-        String sqlQuery = String.format("UPDATE attr SET name = \'%s\' WHERE attr_id = %s;",attr.getName(),attr.getAttrId());
-        jdbcTemplate.update(sqlQuery);
+        jdbcTemplate.update("UPDATE attr SET name = ? WHERE attr_id = ?;",attr.getName(),attr.getAttrId());
     }
 
 

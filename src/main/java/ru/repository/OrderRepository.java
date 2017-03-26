@@ -8,6 +8,7 @@ import ru.interfaces.specification.Specification;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.List;
 
 
@@ -19,24 +20,20 @@ public class OrderRepository implements IOrderRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void addOrders(Orders order) {
+    public void addOrders(Orders order){
         if (order.getOrderId() != 0){
-            String sqlQuery = String.format("INSERT INTO orders (order_id, user_id, offer_id, start_date) VALUES (%s,%s, %s, \'%s\');", order.getOrderId(),order.getUserId(), order.getOfferId(), order.getStartDate());
-            jdbcTemplate.update(sqlQuery);
+            jdbcTemplate.update("INSERT INTO orders (order_id, user_id, offer_id, start_date) VALUES (?,?, ?, ?);", order.getOrderId(),order.getUserId(), order.getOfferId(), order.getStartDate());
         } else {
-            String sqlQuery = String.format("INSERT INTO orders (user_id, offer_id, start_date) VALUES (%s, %s, \'%s\');", order.getUserId(), order.getOfferId(), order.getStartDate());
-            jdbcTemplate.update(sqlQuery);
+            jdbcTemplate.update("INSERT INTO orders (user_id, offer_id, start_date) VALUES (?, ?, ?);", order.getUserId(), order.getOfferId(), order.getStartDate());
         }
     }
 
     public void removeOrders(Orders orders) {
-        String sqlQuery = String.format("DELETE FROM orders WHERE order_id = %s;",orders.getOrderId());
-        jdbcTemplate.update(sqlQuery);
+        jdbcTemplate.update("DELETE FROM orders WHERE order_id = ?;",orders.getOrderId());
     }
 
     public void updateOrders(Orders orders) {
-        String sqlQuery = String.format("UPDATE orders SET user_id = %s, offer_id = %s, start_date = \'%s\' WHERE order_id = %s;",orders.getUserId(),orders.getOfferId(),orders.getStartDate(),orders.getOrderId());
-        jdbcTemplate.update(sqlQuery);
+        jdbcTemplate.update("UPDATE orders SET user_id = ?, offer_id = ?, start_date = ? WHERE order_id = ?;",orders.getUserId(),orders.getOfferId(),orders.getStartDate(),orders.getOrderId());
     }
 
     public List query(Specification specification) {

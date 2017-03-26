@@ -44,6 +44,7 @@ public class OfferRepositoryTest {
     @Test
     public void removeOffer() throws Exception {
         Offer offer = new Offer(101,"Test offer");
+        rep.addOffer(offer);
         rep.removeOffer(offer);
         String sqlQuery = String.format("SELECT * FROM offer WHERE offer_id = %s",offer.getOfferId());
         List<Offer> testOffer = jdbcTemplate.query(sqlQuery, new RowMapper<Offer>() {
@@ -59,7 +60,9 @@ public class OfferRepositoryTest {
 
     @Test
     public void updateOffer() throws Exception {
+        Offer offerTest = new Offer(100, "Test offer");
         Offer offer = new Offer(100,"test");
+        rep.addOffer(offerTest);
         rep.updateOffer(offer);
         String sqlQuery = String.format("SELECT * FROM offer WHERE offer_id = %s",offer.getOfferId());
         List<Offer> testOffer = jdbcTemplate.query(sqlQuery, new RowMapper<Offer>() {

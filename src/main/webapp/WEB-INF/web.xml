@@ -47,6 +47,10 @@
         <servlet-name>logOutServlet</servlet-name>
         <servlet-class>ru.servlets.LogOutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addOfferFormServlet</servlet-name>
+        <servlet-class>ru.servlets.AddOfferFormServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>mainServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -92,6 +96,10 @@
     <servlet-mapping>
         <servlet-name>logOutServlet</servlet-name>
         <url-pattern>/logOut</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addOfferFormServlet</servlet-name>
+        <url-pattern>/addOfferForm</url-pattern>
     </servlet-mapping>
 
 

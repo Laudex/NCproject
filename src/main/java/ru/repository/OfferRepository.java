@@ -1,6 +1,6 @@
 package ru.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import ru.entity.Offer;
@@ -14,7 +14,6 @@ import java.util.List;
 
 public class OfferRepository implements IOfferRepository {
 
-    //@Autowired
     private JdbcTemplate jdbcTemplate;
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -23,22 +22,18 @@ public class OfferRepository implements IOfferRepository {
 
     public void addOffer(Offer offer) {
         if (offer.getOfferId() != 0){
-            String sqlQuery = String.format("INSERT INTO offer (offer_id, name) VALUES (%s,\'%s\');",offer.getOfferId(), offer.getName());
-            jdbcTemplate.update(sqlQuery);
+            jdbcTemplate.update("INSERT INTO offer (offer_id, name) VALUES (?,?);",offer.getOfferId(), offer.getName());
         } else {
-            String sqlQuery = String.format("INSERT INTO offer (name) VALUES (\'%s\');", offer.getName());
-            jdbcTemplate.update(sqlQuery);
+            jdbcTemplate.update("INSERT INTO offer (name) VALUES (?);", offer.getName());
         }
     }
 
     public void removeOffer(Offer offer) {
-        String sqlQuery = String.format("DELETE FROM offer WHERE offer_id = %s;", offer.getOfferId());
-        jdbcTemplate.update(sqlQuery);
+        jdbcTemplate.update("DELETE FROM offer WHERE offer_id = ?;", offer.getOfferId());
     }
 
     public void updateOffer(Offer offer) {
-        String sqlQuery = String.format("UPDATE offer SET name = \'%s\' WHERE offer_id = %s;", offer.getName(), offer.getOfferId());
-        jdbcTemplate.update(sqlQuery);
+        jdbcTemplate.update("UPDATE offer SET name = ? WHERE offer_id = ?;", offer.getName(), offer.getOfferId());
     }
 
     public List query(Specification specification) {
