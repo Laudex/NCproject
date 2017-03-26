@@ -26,7 +26,7 @@ public class AttrValuesRepository implements IAttrValuesRepository {
 
 
     public void removeAttrValues(AttrValues attrValues) {
-        jdbcTemplate.update("DELETE FROM attr_values WHERE offer_id = ? AND attr_id = ?;",attrValues.getOfferId(), attrValues.getAttrId());
+        jdbcTemplate.update("DELETE FROM attr_values WHERE offer_id = ?",attrValues.getOfferId());
     }
 
     public void updateAttrValues(AttrValues attrValues) {
