@@ -36,10 +36,10 @@ INSERT INTO orders VALUES(10,1,1,'2016-07-22');
 
 select setval('orders_order_id_seq',(select max(order_id) from orders));
 
-INSERT INTO attr VALUES(1,'type');
-INSERT INTO attr VALUES(2,'traffic');
-INSERT INTO attr VALUES(3,'price');
-INSERT INTO attr VALUES(4,'period');
+INSERT INTO attr VALUES(1,'Type');
+INSERT INTO attr VALUES(2,'Traffic');
+INSERT INTO attr VALUES(3,'Price');
+INSERT INTO attr VALUES(4,'Period');
 
 
 select setval('attr_attr_id_seq',(select max(attr_id) from attr));
