@@ -14,7 +14,7 @@ CREATE TABLE orders
 (order_id serial NOT NULL,
 user_id int,
 offer_id int,
-start_date date, 
+start_date VARCHAR(200), 
 PRIMARY KEY (order_id),
 FOREIGN KEY(user_id) REFERENCES users(user_id),
 FOREIGN KEY(offer_id) REFERENCES offer(offer_id));
